@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TR Bike — vélos Bluetooth</title><style>*{box-sizing:border-box}:root{font:13px system-ui,sans-serif;color-scheme:light;--bg:#edf2f6;--card:#fff;--text:#193345;--muted:#526b7a;--line:#cfdae2;--tile:#f1f5f8;--power:#e8f5f5;--accent:#087a91;--feedback:#78551b;--good-bg:#dff2e8;--good:#17623e;color:var(--text);background:var(--bg)}:root[data-theme=dark]{color-scheme:dark;--bg:#101923;--card:#192632;--text:#e5eef5;--muted:#afc1ce;--line:#3b5060;--tile:#233442;--power:#193e48;--accent:#087f97;--feedback:#ebc185;--good-bg:#173f32;--good:#9ce2ba}body{margin:0;padding:12px}main{max-width:1560px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}h1{font-size:23px;letter-spacing:-.6px;margin:0}h1 small{font-size:11px;font-weight:500;letter-spacing:0;margin-left:6px}.top p{margin:2px 0 0;color:var(--muted);font-size:11px}.top-right{display:flex;align-items:center;gap:10px}#count{font-size:12px;color:var(--muted);white-space:nowrap}#themeToggle{width:30px;padding:0;font-size:17px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}.bike-card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:11px;min-width:0}.card-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}.card-head>div{display:flex;align-items:baseline;gap:10px;min-width:0}h2{font-size:16px;margin:0;white-space:nowrap}.device-name{font-size:11px;color:var(--muted);overflow-wrap:anywhere}.status{padding:3px 7px;border-radius:20px;background:var(--tile);color:var(--muted);font-size:10px;white-space:nowrap}.bike-card[data-connected=true] .status{background:var(--good-bg);color:var(--good)}.connections{padding-bottom:6px;border-bottom:1px solid var(--line)}summary{cursor:pointer;font-size:11px;color:var(--muted)}label{display:block;font-size:11px;font-weight:600;margin:6px 0 4px}button,select,input{font:inherit;color:inherit;border:1px solid var(--line);border-radius:6px;background:var(--card);min-height:29px}button{padding:4px 7px;cursor:pointer;white-space:nowrap}button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}button:disabled,input:disabled{opacity:.4;cursor:default}button:hover:enabled{filter:brightness(.92)}button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #38a6c1;outline-offset:2px}input[type=number]{width:60px;text-align:center;padding:3px;appearance:textfield}select{padding:4px;max-width:100%;min-width:0}small{font-size:10px;color:var(--muted)}.connect-row{display:flex;gap:5px;flex-wrap:wrap}.connect-row select{flex:1;min-width:100px}.connections small{display:block;margin-top:5px;overflow-wrap:anywhere}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:8px}.metrics>div{background:var(--tile);border-radius:7px;padding:6px 8px;display:grid;grid-template-columns:1fr auto;align-items:baseline}.metrics span{font-size:10px;color:var(--muted);grid-column:1/-1}.metrics strong{display:block;font-size:27px;font-weight:650;letter-spacing:-.8px;line-height:1.2;font-variant-numeric:tabular-nums}.metrics small{margin-left:3px}.metrics>div:first-child{background:var(--power)}.measure-foot{display:flex;justify-content:space-between;gap:8px;font-size:10px;color:var(--muted);margin:4px 2px 0}.settings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.control-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap}.control-row button:first-child,.control-row button:nth-child(3){width:27px;padding:4px}.control-row button:last-child{font-size:11px}.session-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:5px}.session-row button{font-size:11px;min-height:26px;padding:3px 6px}.state-strip{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;border-top:1px solid var(--line);padding-top:6px;margin-top:7px;font-size:10px;color:var(--muted)}.reg-state{font-size:11px;color:var(--text)}.availability{font-size:10px}.feedback{font-size:11px;color:var(--feedback);margin:0;flex-basis:100%;overflow-wrap:anywhere}.feedback:empty{display:none}.diagnostic{margin-left:auto}.diagnostic[open]{flex-basis:100%;margin-left:0}.diagnostic p{font-size:11px;line-height:1.4;overflow-wrap:anywhere}.diagnostic pre{max-height:150px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px}#help{padding:7px 0;color:var(--muted)}#help p{font-size:11px;line-height:1.5;max-width:850px}#environment{font-size:12px;color:var(--feedback);margin-bottom:8px}#environment:empty{display:none}[hidden]{display:none!important}@media(min-width:1900px){main{max-width:1780px}}@media(max-width:850px){.grid{grid-template-columns:1fr}main{max-width:760px}}@media(max-width:480px){body{padding:8px}.bike-card{padding:9px}.top{align-items:start}.top-right{gap:6px}#count{font-size:10px}.settings{grid-template-columns:1fr;gap:0}.metrics{gap:4px}.metrics>div{padding:6px 5px}.metrics strong{font-size:23px}.top p{max-width:190px}.card-head>div{display:block}}
+:root{font-size:14px}body{padding:16px}.top{margin-bottom:12px}.grid{gap:14px}.bike-card{padding:14px}.card-head{margin-bottom:8px}h2{font-size:18px}.device-name{font-size:12px}.status{font-size:11px;padding:4px 8px}summary{font-size:12px}label{font-size:12px;margin:8px 0 5px}button,select,input{min-height:33px}button{padding:5px 8px}input[type=number]{width:66px}.metrics{margin-top:10px;gap:8px}.metrics>div{padding:9px 10px}.metrics span{font-size:11px}.metrics strong{font-size:31px}small{font-size:11px}.measure-foot{font-size:11px;margin-top:6px}.settings{gap:14px}.control-row{gap:5px}.control-row button:first-child,.control-row button:nth-child(3){width:30px}.control-row button:last-child{font-size:12px}.session-row{margin-top:7px;gap:5px}.session-row button{font-size:12px;min-height:29px}.state-strip{margin-top:9px;padding-top:8px;gap:5px 10px;font-size:11px}.reg-state,.feedback{font-size:12px}.availability{font-size:11px}#themeToggle{width:33px}#help p{font-size:12px}
+@media(max-width:480px){body{padding:8px}.bike-card{padding:11px}.metrics>div{padding:8px 6px}.metrics strong{font-size:27px}.settings{gap:0}}
+.grid.single{grid-template-columns:minmax(0,1fr);width:100%;max-width:none}.top{flex-wrap:wrap}.top-right{flex-wrap:wrap}@media(max-width:480px){.top-right{width:100%}#addBike{margin-left:auto;font-size:12px}}.card-actions{display:flex;align-items:center;gap:7px}.remove-bike{font-size:21px;line-height:1;padding:0;width:30px;min-height:30px;color:var(--muted)}.grid:empty::after{content:"Aucun vélo affiché. Cliquez sur + Ajouter un vélo.";color:var(--muted);padding:20px}.program-panel{margin-top:9px;border-top:1px solid var(--line);padding-top:7px}.program-toolbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0}.program-toolbar select{flex:1;min-width:120px}.program-name{width:100%;padding:5px 8px}.program-table{width:100%;border-collapse:collapse;margin:8px 0}.program-table th,.program-table td{text-align:left;padding:4px;font-size:12px}.program-table input[type=number]{width:100%;max-width:130px}.program-table th:last-child{width:35px}.program-panel p{font-size:11px;color:var(--muted);line-height:1.5;margin:6px 0}.program-actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.program-state:empty{display:none}
+
+main{width:100%;max-width:none}.grid{width:100%;min-width:0}.bike-card>*{min-width:0;max-width:100%}.top>*,.top-right>*{max-width:100%}.metrics>div{grid-template-columns:minmax(0,1fr)}.metrics strong{overflow-wrap:anywhere}.metrics small{margin-left:0}.state-strip>*{min-width:0;overflow-wrap:anywhere}.program-table{table-layout:fixed}.program-toolbar>*{max-width:100%}.connect-row select{width:0;flex-basis:100px}.card-actions{flex-shrink:0}.single .bike-card{padding:clamp(18px,2vw,28px)}.single h2{font-size:22px}.single .metrics{gap:14px;margin-top:16px}.single .metrics>div{padding:16px}.single .metrics strong{font-size:clamp(38px,4.5vw,64px)}.single .metrics span,.single label,.single summary{font-size:14px}.single button,.single select,.single input{min-height:40px}.single .control-row button:last-child,.single .session-row button{font-size:14px}.single .settings{gap:24px}.single input[type=number]{width:85px}.single .program-table input[type=number]{width:100%}.single .remove-bike{min-height:30px}.single .state-strip{margin-top:14px;padding-top:12px}
+@media(max-width:850px){main{max-width:none}}
+@media(max-width:600px){.single .bike-card{padding:14px}.single .metrics{gap:6px}.single .metrics>div{padding:9px 6px}.single .metrics strong{font-size:30px}.single .metrics span,.single label,.single summary{font-size:12px}.single .settings{grid-template-columns:minmax(0,1fr);gap:0}.single button,.single select,.single input{min-height:34px}.single .control-row button:last-child,.single .session-row button{font-size:12px}.single .card-head>div:first-child{display:block}}
+@media(max-width:480px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}.program-editor{padding:10px;border:1px solid var(--line);border-radius:8px;margin:9px 0}.program-panel .program-notice{color:var(--text);background:var(--tile);padding:8px 10px;border-radius:6px}.program-panel .program-notice[data-kind=error]{color:var(--feedback)}.program-notice:empty{display:none}
+.settings{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:8px;align-items:start}.target-setting{grid-column:1}.res-setting{grid-column:2}.settings>div{min-width:0}.settings .session-row{grid-column:3/5;justify-content:flex-end;align-self:end;margin-top:0;flex-wrap:nowrap}.settings .session-row button{padding-inline:6px}.single .settings{gap:14px}.single .session-row{align-self:end}
+.workout{margin-top:14px;padding:10px 12px;background:var(--tile);border:1px solid var(--line);border-radius:9px;min-width:0}.workout-head,.workout-times{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px}.workout-head strong{overflow-wrap:anywhere}.workout-head span{color:var(--muted)}.workout-canvas{width:100%;height:110px;margin:10px 0 7px;overflow:hidden}.workout-canvas svg{width:100%;height:100%;display:block}.workout-times{font-size:11px;font-variant-numeric:tabular-nums}.workout-times b{color:var(--text);margin-left:4px}.workout-times>span:nth-child(2){color:var(--muted)}.single .workout-canvas{height:145px}.workout-progress{stroke:#e74d61;stroke-width:3;vector-effect:non-scaling-stroke}
+@media(min-width:851px) and (max-width:1250px){.grid:not(.single) .settings{grid-template-columns:repeat(2,minmax(0,1fr))}.grid:not(.single) .res-setting{grid-column:2}.grid:not(.single) .settings .session-row{grid-column:1/-1;margin-top:5px}}
+@media(max-width:650px){.settings,.single .settings{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.settings .session-row{grid-column:1/-1;margin-top:5px}.single .workout-canvas{height:110px}}
+
+.settings .session-row,.single .settings .session-row{grid-column:3/5;justify-content:flex-start;justify-self:start;gap:8px;align-self:end}.settings .session-row button,.single .settings .session-row button{display:inline-flex;align-items:center;justify-content:center;padding:0;width:50px;height:50px;min-height:50px;flex:0 0 50px;border-radius:10px}.session-row svg{width:27px;height:27px;display:block}.single .settings .session-row button{width:58px;height:58px;min-height:58px;flex-basis:58px}.single .session-row svg{width:31px;height:31px}
+.workout-canvas{height:75px}.single .workout-canvas{height:95px}.workout-times{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr);align-items:center;gap:12px;font-size:14px}.workout-times>span:first-child{text-align:left}.workout-times>span:last-child{text-align:right}.workout-times b{display:block;font-size:25px;font-weight:700;margin:3px 0 0;line-height:1.2}.workout-times>span:nth-child(2){font-size:20px;font-weight:650;color:var(--text);text-align:center;overflow-wrap:anywhere}.single .workout-times{font-size:16px}.single .workout-times b{font-size:32px}.single .workout-times>span:nth-child(2){font-size:25px}.workout-head{font-size:14px}
+@media(min-width:851px) and (max-width:1250px){.grid:not(.single) .settings .session-row{grid-column:1/-1;justify-self:center;margin-top:8px}}
+@media(max-width:650px){.settings .session-row,.single .settings .session-row{grid-column:1/-1;justify-self:center;margin-top:8px}.single .settings .session-row button{width:50px;height:50px;min-height:50px;flex-basis:50px}.single .session-row svg{width:27px;height:27px}.workout-times,.single .workout-times{font-size:12px;gap:6px}.workout-times b,.single .workout-times b{font-size:23px}.workout-times>span:nth-child(2),.single .workout-times>span:nth-child(2){font-size:17px}.single .workout-canvas{height:75px}}
+.settings .session-row,.single .settings .session-row{flex-wrap:wrap}.settings .session-row .fit-export,.single .settings .session-row .fit-export{font-size:16px;font-weight:750;color:var(--accent);letter-spacing:-.5px}
+.workout-measured-trace{stroke:var(--text);stroke-width:1.8;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}.workout-measured-halo{stroke:var(--card);stroke-width:4;opacity:.85;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}.workout-measured-point{fill:var(--text);stroke:var(--card);stroke-width:1;vector-effect:non-scaling-stroke}.workout-progress{stroke:#d96388;stroke-width:1;stroke-dasharray:3 4;opacity:.85;vector-effect:non-scaling-stroke}.workout-legend{display:flex;align-items:center;gap:6px 16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:7px}.workout-legend>span{display:inline-flex;align-items:center;gap:5px}.workout-legend>span::before{content:'';display:inline-block;width:15px}.workout-legend .target-key::before{height:8px;background:#398db4;border-radius:2px}.workout-legend .measured-key::before{border-top:2px solid var(--text)}.workout-legend .cursor-key::before{border-top:1px dashed #d96388}.workout-legend>span:last-child{margin-left:auto}.workout-legend>span:last-child::before{display:none}
+
+.card-head>.identity-block{display:block;flex:1;min-width:0}.identity-line{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px}.subject-entry{margin:0;min-width:0;max-width:100%}.subject-entry input{width:230px;max-width:100%;padding:5px 8px;font-size:13px}.subject-display{display:flex;align-items:center;gap:7px;min-width:0;max-width:100%}.subject-name{font-size:18px;line-height:1.3;font-weight:700;overflow-wrap:anywhere;min-width:0}.single .subject-name{font-size:22px}.subject-display .clear-subject,.single .subject-display .clear-subject{width:26px;height:26px;min-height:26px;flex:0 0 26px;font-size:21px;line-height:1;padding:0;border:0;background:transparent;color:var(--muted)}.single .subject-entry input{min-height:34px}.identity-block>.device-name{display:block;margin-top:3px}@media(max-width:480px){.subject-entry input{width:190px}.single .subject-name{font-size:22px}}
+/* Center the subject on the full card header, with equal side columns. */
+.card-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr);align-items:center;gap:5px 8px}.card-head>.identity-block,.identity-line{display:contents}.identity-line h2{grid-column:1;grid-row:1}.subject-entry,.subject-display{grid-column:2;grid-row:1;justify-self:center;width:100%;justify-content:center;text-align:center}.subject-entry input{width:100%;max-width:260px;text-align:center}.subject-name{text-align:center}.card-head>.card-actions{grid-column:3;grid-row:1;justify-self:end;align-items:center;gap:5px}.identity-block>.device-name{grid-column:1/-1;grid-row:2}.subject-display{position:relative;padding:0 25px}.subject-display .clear-subject{position:absolute;right:0;top:50%;transform:translateY(-50%)}
+.connections>summary,.program-panel>summary{font-weight:700;color:var(--text)}
+@media(min-width:851px){.grid:not(.single) .settings .session-row{align-self:center;margin-top:0}}
+@media(min-width:851px) and (max-width:1250px){.grid:not(.single) .settings .session-row{position:relative;top:-4px}}
+.workout-navigation{display:flex;justify-content:center;align-items:center;gap:8px;margin:8px 0 0}.workout-navigation button,.single .workout-navigation button{display:inline-flex;align-items:center;justify-content:center;width:40px;height:36px;min-height:36px;padding:5px;border-radius:8px}.workout-navigation svg{width:24px;height:24px}.workout-canvas{margin-top:6px}
+.workout-head{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:6px;align-items:center}.workout-head .workout-navigation{margin:0;gap:6px}.workout-head>[data-id=workoutStatus]{text-align:right}.workout-head .workout-navigation button,.single .workout-head .workout-navigation button{width:34px;height:30px;min-height:30px;padding:3px}.workout-head .workout-navigation svg{width:22px;height:22px}
+.workout-legend .target-key::before{background:var(--workout-colors,#398db4)}
+.connections>summary,.program-panel>summary{display:flex;align-items:center;gap:9px;list-style:none;min-height:30px}.connections>summary::-webkit-details-marker,.program-panel>summary::-webkit-details-marker{display:none}.connections>summary::before,.program-panel>summary::before{content:'';display:block;width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:10px solid currentColor;flex-shrink:0;transform-origin:40% 50%}.connections[open]>summary::before,.program-panel[open]>summary::before{transform:rotate(90deg)}
+.bike-card[data-connected=true] .identity-block>.device-name{font-size:16px;font-weight:650;color:var(--text)}.single .bike-card[data-connected=true] .identity-block>.device-name{font-size:19px}.card-head>.card-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:100%}.card-actions button,.single .card-actions button{font-size:12px;min-height:32px;padding:5px 8px}.card-actions .remove-bike{width:auto;line-height:normal;color:var(--muted)}.subject-display{width:fit-content;max-width:100%;padding:0;gap:4px}.subject-display .clear-subject,.single .subject-display .clear-subject{position:static;transform:none;align-self:center}
+.card-head{grid-template-columns:minmax(130px,1fr) minmax(0,2fr) minmax(130px,1fr)}.bike-title-row{grid-column:1;grid-row:1;display:flex;align-items:center;gap:7px;min-width:0}.bike-title-row .remove-bike{width:auto;min-height:28px;padding:4px 6px;font-size:11px;line-height:normal}.connected-bike-row{grid-column:1/-1;grid-row:2;display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}.connected-bike-row [data-id=disconnect]{font-size:12px;min-height:30px;padding:4px 8px}.bike-card:not([data-connected=true]) .connected-bike-row [data-id=disconnect]{display:none}.bike-card[data-connected=true] .connected-bike-row .device-name{font-size:16px;font-weight:650;color:var(--text)}.single .bike-card[data-connected=true] .connected-bike-row .device-name{font-size:19px}
+@media(max-width:480px){.card-head{grid-template-columns:minmax(0,1fr)}.bike-title-row{grid-column:1;grid-row:1}.subject-entry,.subject-display{grid-column:1;grid-row:2}.connected-bike-row{grid-row:3}}
+.program-table th:nth-child(3){width:58px}.program-table input[type=checkbox]{width:20px;height:20px;min-height:20px;accent-color:var(--accent)}
+.program-table,.program-table tbody{display:block;width:100%}.program-table tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 70px 30px;gap:6px;align-items:end;margin:7px 0}.program-table tr.is-ramp{grid-template-columns:repeat(3,minmax(0,1fr)) 70px 30px}.program-table td{padding:0;min-width:0}.program-table label{margin:0;display:flex;flex-direction:column;gap:4px;font-size:12px}.program-table .ramp-choice{order:4;align-self:center}.program-table .ramp-choice label{display:flex;flex-direction:row;align-items:center}.program-table .ramp-end{order:3}.program-table td:last-child{order:5}.program-table input[type=number],.single .program-table input[type=number]{width:100%;max-width:none}
+.subject-mass{grid-column:2;grid-row:2;justify-self:center;display:flex;align-items:center;gap:6px;margin:0;font-size:12px}.subject-mass input,.single .subject-mass input{width:75px;min-height:30px}.connected-bike-row{grid-row:3}.unit-choice{display:flex;align-items:center;gap:8px}.unit-choice input{width:20px;height:20px;min-height:20px}.mass-hint{font-size:11px;color:var(--muted)}
+@media(max-width:480px){.subject-mass{grid-column:1;grid-row:3}.connected-bike-row{grid-row:4}}
+.program-table .ramp-choice{display:flex;flex-direction:column;gap:7px}.program-table .ramp-choice label{white-space:nowrap}
+
+.workout .workout-times{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,1.55fr) minmax(0,1fr);gap:8px;align-items:start}
+.workout .workout-times>span,.single .workout .workout-times>span{font-size:inherit;font-weight:400;color:var(--muted);text-align:center;min-width:0;overflow-wrap:anywhere}
+.workout .workout-times>span:first-child{text-align:left}.workout .workout-times>span:last-child{text-align:right}
+.workout .workout-times b{font-size:clamp(19px,2vw,27px);font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.4px}
+.single .workout .workout-times b{font-size:clamp(24px,3vw,34px)}
+.workout .workout-times small{display:block;font-size:11px;line-height:1.4;margin-top:3px;color:var(--muted)}
+.workout-tooltip{position:fixed;z-index:100;max-width:min(330px,calc(100vw - 16px));padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);box-shadow:0 5px 22px #0003;pointer-events:none;font-size:12px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+.workout-tooltip strong,.workout-tooltip span{display:block}.workout-tooltip strong{font-size:13px;margin-bottom:3px}.workout-tooltip .tooltip-target{font-weight:700}.workout-tooltip .tooltip-detail{color:var(--muted)}
+.workout-canvas{cursor:crosshair}
+@media(max-width:560px){.workout .workout-times{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.workout .workout-times>span:nth-child(odd){text-align:left}.workout .workout-times>span:nth-child(even){text-align:right}.single .workout .workout-times b{font-size:25px}}
+</style></head><body><main><header class="top"><div><h1>TR Bike</h1><p>Pilotage individuel · Bluetooth et USB</p></div><div class="top-right"><span id="count">0 / 1 vélo connecté</span><button id="addBike" type="button">+ Ajouter un vélo</button><button id="themeToggle" type="button" aria-label="Activer le mode sombre" title="Activer le mode sombre" aria-pressed="false">☾</button></div></header><div id="environment" role="status"></div><section id="grid" class="grid" aria-label="Vélos"></section><details id="help"><summary>Mode d’emploi</summary><p>Pour un Monark LC6 novo en USB : mettre le port USB en PC mode, cliquer « Monark USB » dans le menu Connexion, puis choisir son port COM. La connexion lit l’identité et les mesures sans changer la charge. Une consigne est confirmée par relecture de la cible, distincte de la puissance mesurée. Pause et Stop demandent 0 W. En USB, masquer la page pendant une cible entraîne une tentative d’allègement et une déconnexion ; vérifier la console si le câble ou la page ne répond plus. Pour chaque fiche : ouvrir « Connexion vélo &amp; cardio », scanner et connecter un vélo, puis associer sa ceinture. Choisir une cible et cliquer Activer. En régulation par résistance : sous 30 tr/min, la résistance redescend au minimum pour repartir facilement. La cible est conservée et reprend à partir de 30 tr/min. Les programmes se mettent en attente quand le pédalage ou les mesures manquent. Désactiver conserve la résistance actuelle. Pause et Stop désactivent la régulation ; Stop n’est pas un frein d’urgence. Après Stop, les boutons .FIT et .CSV exportent les mesures enregistrées depuis Lecture ou l’activation d’une cible. Garder la page au premier plan. Utiliser « + Ajouter un vélo » pour créer une fiche supplémentaire. Le nombre de connexions simultanées dépend du Bluetooth de ce PC ; le vérifier d’abord hors patient.</p></details></main><template id="bike-template"><article class="bike-card" data-bike-card data-connected="false">
+<header class="card-head"><div class="identity-block"><div class="identity-line"><div class="bike-title-row"><h2 data-id="heading">Vélo</h2><button data-id="removeBike" type="button" class="remove-bike" title="Retirer la fiche de ce vélo" aria-label="Retirer la fiche de ce vélo">Retirer</button></div><form data-id="subjectForm" class="subject-entry"><input data-id="subjectInput" type="text" maxlength="80" autocomplete="off" aria-label="Nom du sujet ou patient, valider avec Entrée" placeholder="Sujet / patient · Entrée"></form><div data-id="subjectDisplay" class="subject-display" hidden><strong data-id="subjectName" class="subject-name"></strong><button data-id="clearSubject" class="clear-subject" type="button" title="Effacer le nom" aria-label="Effacer le nom du sujet ou patient">×</button></div></div><label class="subject-mass">Masse <input data-id="subjectMass" type="number" min="0.1" max="500" step="0.1" placeholder="—" aria-label="Masse du sujet en kilogrammes"> kg</label><div class="connected-bike-row"><span data-id="connectedName" class="device-name">Non connecté</span><button data-id="disconnect" type="button" title="Déconnecter le vélo en gardant sa fiche" disabled>Déconnecter</button></div></div></header>
+<details data-id="connections" class="connections"><summary>Connexion vélo &amp; cardio</summary>
+<span data-id="status" class="status" role="status">Déconnecté</span><label data-for="bikes">Vélo Bluetooth / Monark USB</label><div class="connect-row"><button data-id="scan">Scanner Bluetooth</button><button data-id="connectUsb" type="button" title="Monark LC6 novo : USB en PC mode, choisir le port COM">Monark USB</button><select data-id="bikes"><option value="">Choisir un vélo</option></select><button data-id="connect" class="primary">Connecter</button></div>
+<label data-for="hrs">Ceinture de ce vélo</label><div class="connect-row"><button data-id="scanHr">Scanner</button><select data-id="hrs"><option value="">Choisir une ceinture</option></select><button data-id="connectHr">Associer</button><button data-id="disconnectHr" disabled>Dissocier</button></div><small data-id="hrName">Aucune ceinture associée</small></details>
+<div class="metrics"><div><span>Puissance</span><strong data-id="power">—</strong><small>W</small></div><div><span>Cadence</span><strong data-id="cadence">—</strong><small>tr/min</small></div><div><span>Temps</span><strong data-id="time">00:00</strong><small>min:s</small></div><div><span>Cardio</span><strong data-id="hr">—</strong><small>bpm</small></div></div>
+<div class="measure-foot"><span>Résistance <b data-id="actualRes">—</b></span><small data-id="fresh">Aucune donnée</small></div>
+<div class="settings"><div class="target-setting"><label data-for="watts">Cible de puissance · W</label><div class="control-row"><button data-step="watts:-5" aria-label="Diminuer la cible de 5 watts" disabled>−</button><input data-id="watts" type="number" value="50" min="0" max="1000" step="1" disabled><button data-step="watts:5" aria-label="Augmenter la cible de 5 watts" disabled>+</button><button data-id="applyWatts" class="primary" disabled>Activer</button></div></div>
+<div class="res-setting"><label data-for="res">Résistance manuelle</label><div class="control-row"><button data-step="res:-1" aria-label="Diminuer la résistance" disabled>−</button><input data-id="res" type="number" value="1" min="1" max="32" step="1" disabled><button data-step="res:1" aria-label="Augmenter la résistance" disabled>+</button><button data-id="applyRes" disabled>Appliquer</button></div></div><footer class="session-row"><button data-id="play" title="Lecture" aria-label="Lecture" disabled><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button><button data-id="pause" title="Pause" aria-label="Pause" disabled><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M5 4h5v16H5zm9 0h5v16h-5z"/></svg></button><button data-id="stop" title="Stop" aria-label="Stop" disabled><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="1"/></svg></button><button data-id="reset" title="Réinitialiser le chronomètre" aria-label="Réinitialiser le chronomètre"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button data-id="exportFit" class="fit-export" type="button" title="Export FIT disponible après Stop" aria-label="Exporter la séance au format FIT" disabled>.FIT</button><button data-id="exportCsv" class="fit-export" type="button" title="Export CSV disponible après Stop" aria-label="Exporter la séance au format CSV" disabled>.CSV</button></footer></div>
+<section data-id="workout" class="workout" aria-label="Profil de l’entraînement" hidden><div class="workout-head"><strong data-id="workoutName"></strong><div class="workout-navigation" role="group" aria-label="Changer d’intervalle"><button data-id="programPrevious" type="button" title="Intervalle précédent" aria-label="Intervalle précédent" disabled><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M5 4h3v16H5zm14 0v16L9 12z"/></svg></button><button data-id="programNext" type="button" title="Intervalle suivant" aria-label="Intervalle suivant" disabled><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M16 4h3v16h-3zM5 4v16l10-8z"/></svg></button></div><span data-id="workoutStatus">Prêt</span></div><div class="workout-legend"><span class="target-key">Consigne</span><span class="measured-key" data-id="workoutMeasured">Puissance mesurée : —</span><span class="cursor-key">Progression</span><span data-id="workoutScale"></span></div><div class="workout-canvas" data-id="workoutChart"></div><div class="workout-times"><span>Écoulé <b data-id="workoutElapsed">00:00</b></span><span>Étape <b data-id="workoutStep">1 / 1</b><small data-id="workoutStepTime"></small></span><span>Puissance cible <b data-id="workoutTarget">—</b><small data-id="workoutTargetInfo"></small></span><span>Restant <b data-id="workoutRemaining">00:00</b></span></div><div data-id="workoutTooltip" class="workout-tooltip" role="tooltip" hidden></div></section><details class="program-panel" data-id="programPanel"><summary>Programme fractionné</summary>
+<label data-for="programSelect">Programmes enregistrés</label>
+<div class="program-toolbar"><select data-id="programSelect"><option value="">Aucun entraînement</option></select><button data-id="programEdit" type="button" disabled>Modifier</button><button data-id="programDelete" type="button" disabled>Supprimer</button></div>
+<div class="program-actions"><button data-id="programNew" type="button">+ Créer un programme</button></div>
+<p data-id="programNotice" class="program-notice" role="status" aria-live="polite"></p>
+<div class="program-actions"><button data-id="programStart" class="primary" type="button" disabled>▶ Lancer le programme</button><button data-id="programPause" type="button" disabled>Pause</button><button data-id="programStop" type="button" disabled>Arrêter</button></div><p data-id="programRunHint"></p>
+<details data-id="programEditor" class="program-editor"><summary>Créer / modifier un programme</summary>
+<label data-for="programName">Nom du programme</label><input class="program-name" data-id="programName" maxlength="80" placeholder="Ex. Fractionné 1 min / 1 min">
+<p data-id="programUnitHint">Chaque étape peut être en W ou en W/kg. La masse sera nécessaire au lancement si une étape utilise W/kg.</p><p>Cocher « Rampe » pour faire évoluer progressivement la puissance du départ à l’arrivée pendant la durée indiquée. Une rampe peut monter ou descendre.</p><table class="program-table"><tbody data-id="programRows"></tbody></table>
+<div class="program-toolbar"><button data-id="programAdd" type="button">+ Étape</button><label>Répétitions <input data-id="programRepeats" type="number" min="1" max="100" step="1" value="1"></label></div>
+<button data-id="programSave" class="primary" type="button">Enregistrer le programme</button>
+</details>
+<p>Les étapes sont enchaînées dans l’ordre, puis la liste est répétée. Le temps des étapes attend le pédalage à partir de 30 tr/min et des mesures récentes. En fin de programme, la résistance est ramenée au minimum (ou Stop envoyé en ERG natif).</p>
+<div class="program-actions"><button data-id="programExport" type="button">Exporter les programmes</button><button data-id="programImport" type="button">Importer</button><input data-id="programFile" type="file" accept="application/json,.json" hidden></div><p>Enregistrement sur ce navigateur. Exporter puis importer le fichier JSON pour les retrouver sur un autre ordinateur.</p>
+</details>
+<div class="state-strip"><div class="reg-state" data-id="externalPanel"><span data-id="ergState" role="status">Régulation désactivée</span></div><small data-id="powerAvailability" class="availability">Connecter le vélo pour commencer.</small><small data-id="session">Séance arrêtée</small><small data-id="programState" class="program-state" role="status"></small>
+
+<details class="diagnostic"><summary>Diagnostic</summary><p data-id="identity">Identité du vélo : —</p><p data-id="capabilities">Capacités à lire après connexion.</p><p data-id="resInfo"></p><p data-id="wattInfo"></p><p>Temps transmis par le vélo : <b data-id="bikeTime">—</b></p><label data-for="powerMode">Méthode de contrôle</label><select data-id="powerMode"><option value="external">Régulation par résistance</option><option value="native" data-id="nativeOption" disabled>ERG natif du vélo</option></select><p data-id="compat"></p><button data-id="export">Exporter le diagnostic de ce vélo</button><pre data-id="log"></pre></details><p data-id="command" class="feedback" role="status"></p></div>
+</article></template><script>
+const themeButton=document.getElementById('themeToggle');
+function setTheme(dark){document.documentElement.dataset.theme=dark?'dark':'light';themeButton.textContent=dark?'☀':'☾';const label=dark?'Activer le mode clair':'Activer le mode sombre';themeButton.title=label;themeButton.setAttribute('aria-label',label);themeButton.setAttribute('aria-pressed',String(dark));}
+let savedTheme;try{savedTheme=localStorage.getItem('trbike-theme');}catch{}
+setTheme(savedTheme?savedTheme==='dark':!!window.matchMedia?.('(prefers-color-scheme: dark)').matches);
+themeButton.onclick=()=>{const dark=document.documentElement.dataset.theme!=='dark';setTheme(dark);try{localStorage.setItem('trbike-theme',dark?'dark':'light');}catch{}};
+const programViews=new Set();
+function stepPower(step,elapsedMs=0){return step.ramp?step.watts+(step.endWatts-step.watts)*Math.max(0,Math.min(1,elapsedMs/(step.seconds*1000))):step.watts;}
+function validateProgram(p){
+ if(!p||typeof p.name!=='string'||!p.name.trim()||p.name.length>80||!Array.isArray(p.steps)||!p.steps.length||p.steps.length>100)throw Error('Programme invalide : nom et 1 à 100 étapes requis.');
+ const repeats=Number(p.repeats??1);if(!Number.isInteger(repeats)||repeats<1||repeats>100)throw Error('Choisir 1 à 100 répétitions.');
+ if(p.unit!==undefined&&!['w','wkg'].includes(p.unit))throw Error('Unité de programme inconnue.');
+ const steps=p.steps.map(s=>{const unit=s.unit??p.unit??'w';if(!['w','wkg'].includes(unit))throw Error('Unité d’étape inconnue.');const wkg=unit==='wkg',validPower=x=>Number.isFinite(x)&&x>0&&x<=(wkg?30:1500)&&(wkg?Math.abs(x*100-Math.round(x*100))<1e-7:Number.isInteger(x));const seconds=Number(s.seconds),watts=Number(s.watts);if(!Number.isInteger(seconds)||seconds<1||seconds>86400||!validPower(watts))throw Error(wkg?'Chaque étape : durée entière de 1 à 86400 s et puissance de 0,01 à 30 W/kg (2 décimales).':'Chaque étape : durée entière de 1 à 86400 s, puissance entière de 1 à 1500 W.');const row={seconds,watts,...(wkg?{unit:'wkg'}:{})};if(s.ramp===true){const endWatts=Number(s.endWatts);if(!validPower(endWatts))throw Error('Puissance d’arrivée invalide ('+(wkg?'W/kg':'W')+').');return {...row,ramp:true,endWatts};}return row;});
+ return {id:typeof p.id==='string'?p.id:'',name:p.name.trim(),repeats,steps};
+}
+function hasRelativeSteps(p){return p.steps.some(s=>(s.unit??p.unit)==='wkg');}
+let programs=[];try{const raw=JSON.parse(localStorage.getItem('trbike-programs')||'[]');if(!Array.isArray(raw)||raw.length>200)throw Error();programs=raw.map(validateProgram);}catch{}
+function storePrograms(next){localStorage.setItem('trbike-programs',JSON.stringify(next));programs=next;for(const refresh of programViews)refresh();}
+function downloadJSON(value,name){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+// FIT activity encoder: standard messages, little endian, header CRC and file CRC.
+function fitCRC(bytes){const table=[0,0xCC01,0xD801,0x1400,0xF001,0x3C00,0x2800,0xE401,0xA001,0x6C00,0x7800,0xB401,0x5000,0x9C01,0x8801,0x4400];let crc=0;for(const b of bytes){let t=table[crc&15];crc=((crc>>4)&0xFFF)^t^table[b&15];t=table[crc&15];crc=((crc>>4)&0xFFF)^t^table[(b>>4)&15];}return crc;}
+function encodeFIT(activity){
+ if(!activity?.stopped||!activity.samples.length)throw Error('Arrêter une séance contenant des mesures avant de l’exporter.');
+ const stamp=ms=>Math.floor(ms/1000)-631065600,chunks=[],defs=new Map();
+ function define(local,global,fields){defs.set(local,fields);const a=new Uint8Array(6+fields.length*3),v=new DataView(a.buffer);a.set([0x40|local,0,0]);v.setUint16(3,global,true);a[5]=fields.length;fields.forEach((f,i)=>a.set(f,6+i*3));chunks.push(a);}
+ function write(local,values){const fields=defs.get(local),a=new Uint8Array(1+fields.reduce((n,f)=>n+f[1],0)),v=new DataView(a.buffer);a[0]=local;let pos=1;fields.forEach((f,i)=>{const val=values[i]??(f[1]===1?255:f[1]===2?65535:0xFFFFFFFF);if(f[1]===1)v.setUint8(pos,val);else if(f[1]===2)v.setUint16(pos,val,true);else v.setUint32(pos,val,true);pos+=f[1];});chunks.push(a);}
+ define(0,0,[[0,1,0],[1,2,0x84],[2,2,0x84],[4,4,0x86]]);write(0,[4,255,1,stamp(activity.startMs)]);
+ define(1,21,[[253,4,0x86],[0,1,0],[1,1,0],[4,1,2]]);
+ define(2,20,[[253,4,0x86],[3,1,2],[4,1,2],[7,2,0x84],[53,1,2]]);
+ define(3,19,[[254,2,0x84],[253,4,0x86],[0,1,0],[1,1,0],[2,4,0x86],[7,4,0x86],[8,4,0x86],[25,1,0],[39,1,0]]);
+ define(4,18,[[254,2,0x84],[253,4,0x86],[0,1,0],[1,1,0],[2,4,0x86],[5,1,0],[6,1,0],[7,4,0x86],[8,4,0x86],[25,2,0x84],[26,2,0x84]]);
+ define(5,34,[[253,4,0x86],[0,4,0x86],[1,2,0x84],[2,1,0],[3,1,0],[4,1,0]]);
+ const items=[...activity.events.map(e=>({...e,kind:'event'})),...activity.samples.map(s=>({...s,kind:'record'}))];
+ const order=x=>x.kind==='record'?1:x.type===0?0:2;items.sort((a,b)=>a.t-b.t||order(a)-order(b));
+ for(const x of items){if(x.kind==='event'){write(1,[stamp(x.t),0,x.type,0]);continue;}const cadence=Number.isFinite(x.cadence)?Math.floor(x.cadence):undefined;write(2,[stamp(x.t),x.hr,cadence,x.power,cadence===undefined?undefined:Math.round((x.cadence-cadence)*128)]);}
+ const end=stamp(activity.endMs),start=stamp(activity.startMs),elapsed=Math.round(activity.endMs-activity.startMs),timer=Math.round(activity.timerMs);
+ write(3,[0,end,9,1,start,elapsed,timer,2,6]);write(4,[0,end,8,1,start,2,6,elapsed,timer,0,1]);write(5,[end,timer,1,0,26,1]);
+ const size=chunks.reduce((n,c)=>n+c.length,0),file=new Uint8Array(14+size+2),view=new DataView(file.buffer);file[0]=14;file[1]=0x20;view.setUint16(2,21218,true);view.setUint32(4,size,true);file.set([46,70,73,84],8);view.setUint16(12,fitCRC(file.subarray(0,12)),true);let pos=14;for(const c of chunks){file.set(c,pos);pos+=c.length;}view.setUint16(pos,fitCRC(file.subarray(0,pos)),true);return file;
+}
+
+// Monark serial protocol: independent implementation of the documented ASCII
+// interface and the wire commands used by GoldenCheetah MonarkConnection.cpp.
+// Virtual characteristics below adapt USB to TR Bike's existing control path.
+const monarkPortIds=new WeakMap(),monarkPortClaims=new Set();let monarkPortSequence=0;
+class MonarkUSBLink{
+ constructor(port,log){this.port=port;this.log=log;this.pending=null;this.queue=Promise.resolve();this.buffer='';this.fault=null;this.closed=false;this.xoff=false;this.onFault=()=>{};}
+ enqueue(fn){const next=this.queue.then(()=>{if(this.fault||this.closed)throw Error(this.fault||'Port USB fermé.');return fn();});this.queue=next.catch(()=>{});return next;}
+ async open(){await this.port.open({baudRate:4800,dataBits:8,stopBits:1,parity:'none',flowControl:'none',bufferSize:1024});this.reader=this.port.readable.getReader();this.writer=this.port.writable.getWriter();this.readTask=this.readLoop();await this.write('\r');await new Promise(r=>setTimeout(r,100));this.buffer='';}
+ async write(text){
+  const started=performance.now();while(this.xoff){if(performance.now()-started>1000)throw Error('Le Monark suspend la liaison USB (XOFF).');await new Promise(r=>setTimeout(r,20));}
+  if(this.fault||this.closed)throw Error(this.fault||'Port USB fermé.');this.log('USB → '+text.replace(/\r/g,'⏎'));let timer;try{await Promise.race([this.writer.write(new TextEncoder().encode(text)),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Écriture USB sans réponse. Reconnecter le vélo.')),1500);})]);}catch(e){this.fail(e.message);throw e;}finally{clearTimeout(timer);}
+ }
+ async readLoop(){
+  const decoder=new TextDecoder();
+  try{while(!this.closed){const {value,done}=await this.reader.read();if(done){if(!this.closed)throw Error('Lecture USB terminée.');break;}let clean=[];for(const x of value){if(x===0x13){this.xoff=true;continue;}if(x===0x11){this.xoff=false;continue;}if(x!==0)clean.push(x);}this.buffer+=decoder.decode(Uint8Array.from(clean),{stream:true});if(this.buffer.length>4096)throw Error('Réponse USB trop longue ou débit incorrect.');let end;while((end=this.buffer.search(/[\r\n]/))!==-1){const line=this.buffer.slice(0,end).trim().replace(/^>\s*/,'');this.buffer=this.buffer.slice(end+1);if(!line)continue;this.log('USB ← '+line);const q=this.pending;if(!q||line.toLowerCase()===q.command.toLowerCase())continue;if(/^(?:error|err\b|unknown|invalid|not supported|\?)/i.test(line)){this.pending=null;clearTimeout(q.timer);q.reject(Error('Monark : '+line));continue;}if(q.accept(line)){this.pending=null;clearTimeout(q.timer);q.resolve(line);}}}}
+  catch(e){if(!this.closed)this.fail('Liaison USB interrompue : '+e.message);}
+  finally{this.reader.releaseLock();}
+ }
+ fail(message){if(this.fault||this.closed)return;this.fault=message;if(this.pending){clearTimeout(this.pending.timer);this.pending.reject(Error(message));this.pending=null;}this.onFault(message);}
+ request(command,accept,timeout=1500){
+  if(this.pending)return Promise.reject(Error('Commande série déjà en cours.'));
+  this.buffer='';
+  return new Promise((resolve,reject)=>{const q={command,accept,resolve,reject,timer:null};this.pending=q;q.timer=setTimeout(()=>{if(this.pending!==q)return;this.pending=null;const message='Pas de réponse USB à « '+command+' ». Vérifier PC mode, fermer les autres logiciels et reconnecter.';reject(Error(message));this.fail(message);},timeout);this.write(command+'\r').catch(e=>{if(this.pending===q){clearTimeout(q.timer);this.pending=null;reject(e);this.fail(e.message);}});});
+ }
+ async number(command,min,max){
+  // Novo firmware may label a numeric reply: B025 is target 25 W.
+  // Strip only this request's exact command prefix, never arbitrary letters.
+  const numeric=s=>{let text=s.trim();if(text.slice(0,command.length).toLowerCase()===command.toLowerCase())text=text.slice(command.length).replace(/^\s*[:=]?\s*/,'');return /^\d+(?:[.,]\d+)?$/.test(text)?Number(text.replace(',','.')):null;};
+  const line=await this.request(command,s=>numeric(s)!==null),n=numeric(line);
+  if(!Number.isFinite(n)||n<min||n>max)throw Error('Valeur USB incohérente pour '+command+' : '+line);return n;
+ }
+ async setPower(watts){
+  if(!Number.isInteger(watts)||watts<0||watts>700)throw Error('Cible USB : entier de 0 à 700 W.');
+  // The setter can be silent. Drain any optional echo/ack before reading B.
+  await this.write('power '+watts+'\r');await new Promise(r=>setTimeout(r,200));
+  const readback=await this.number('B',0,2000);
+  if(readback!==watts)throw Error('Consigne USB non confirmée : '+watts+' W demandés, '+readback+' W relus. Vérifier la console.');
+  this.log('USB : consigne relue '+readback+' W (ce n’est pas la puissance mesurée).');
+ }
+ async close(){
+  if(this.closed)return;this.closed=true;if(this.pending){clearTimeout(this.pending.timer);this.pending.reject(Error('Port USB fermé.'));this.pending=null;}
+  try{await this.reader?.cancel();}catch{}try{await this.readTask;}catch{}
+  try{this.writer?.releaseLock();}catch{}try{await this.port.close();}catch(e){this.log('Fermeture USB : '+e.message);}
+ }
+}
+class MonarkUSBCharacteristic extends EventTarget{
+ constructor(id,value,properties){super();this.uuid='USB Monark / '+id.toString(16);this.value=value?new DataView(Uint8Array.from(value).buffer):null;this.properties=properties;this.active=false;}
+ async readValue(){return this.value;}
+ async startNotifications(){this.active=true;return this;}
+ notify(bytes){if(!this.active)return;this.value=new DataView(Uint8Array.from(bytes).buffer);this.dispatchEvent(new Event('characteristicvaluechanged'));}
+}
+function makeMonarkUSBBike(port,log){
+ if(!monarkPortIds.has(port))monarkPortIds.set(port,++monarkPortSequence);
+ const d=new EventTarget();d.id='monark-usb-'+monarkPortIds.get(port);d.name='Monark USB';d.isUSB=true;
+ const chars=new Map([[0x2acc,new MonarkUSBCharacteristic(0x2acc,[0x82,0x40,0,0,8,0,0,0],{read:true})],[0x2ad8,new MonarkUSBCharacteristic(0x2ad8,[0,0,0xbc,2,1,0],{read:true})],[0x2ad2,new MonarkUSBCharacteristic(0x2ad2,null,{notify:true})],[0x2ad9,new MonarkUSBCharacteristic(0x2ad9,null,{write:true,indicate:true})]]);
+ let link=null,timer=null,pollBusy=false,closing=false,lastTarget=null,paused=false,lastSample=null,shuttingDown=null,claimed=false;
+ function notifySample(){if(!lastSample)return;const p=Math.round(lastSample.power),c=Math.round(lastSample.cadence*2);chars.get(0x2ad2).notify([0x45,0,c&255,c>>8,p&255,p>>8]);lastSample=null;}
+ async function poll(){
+  if(pollBusy||closing||!d.gatt.connected)return;pollBusy=true;
+  try{await link.enqueue(async()=>{if(closing)return;const power=await link.number('power',0,2000),cadence=await link.number('pedal',0,250);if(!closing){lastSample={power,cadence};notifySample();}});}
+  catch(e){log(e.message);void shutdown(e.message);}
+  finally{pollBusy=false;}
+ }
+ function shutdown(reason){
+  if(shuttingDown)return shuttingDown;closing=true;const wasConnected=d.gatt.connected;d.gatt.connected=false;clearInterval(timer);document.removeEventListener('visibilitychange',onVisibility);
+  if(wasConnected){log('USB : '+reason);d.dispatchEvent(new Event('gattserverdisconnected'));}
+  shuttingDown=(async()=>{try{if(link&&!link.fault&&lastTarget!==null){await link.enqueue(()=>link.setPower(0));log('USB : allègement 0 W relu avant fermeture.');}}catch(e){log('Allègement USB non confirmé : '+e.message+' Vérifier la console Monark.');}finally{await link?.close();if(claimed){monarkPortClaims.delete(port);claimed=false;}}})();return shuttingDown;
+ }
+ function onVisibility(){if(document.hidden&&lastTarget!==null)void shutdown('page masquée ; arrêt de la liaison, sans reprise automatique.');}
+ const cp=chars.get(0x2ad9);
+ cp.writeValueWithResponse=async bytes=>{
+  if(closing||!d.gatt.connected)throw Error('Monark USB déconnecté.');
+  const op=bytes[0];
+  try{
+   await link.enqueue(async()=>{
+    if(closing)throw Error('Monark USB en cours de déconnexion.');
+    if(op===0){log('USB : liaison réservée ; aucune modification de charge.');}
+    else if(op===5){const watts=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength).getInt16(1,true);lastTarget=watts;await link.setPower(watts);paused=false;}
+    else if(op===8){await link.setPower(0);paused=bytes[1]===2;if(!paused)lastTarget=null;log('USB : '+(paused?'pause':'arrêt')+' du chrono local et cible 0 W relue.');}
+    else if(op===7){if(paused&&lastTarget!==null)await link.setPower(lastTarget);paused=false;log('USB : lecture du chrono local.');}
+    else throw Error('Commande non disponible sur l’adaptateur USB.');
+   });
+   cp.notify([128,op,1]);
+  }catch(e){log('USB : '+e.message);void shutdown(e.message);throw e;}
+ };
+ d.gatt={connected:false,
+  connect:async()=>{
+   if(monarkPortClaims.has(port))throw Error('Ce port USB est déjà utilisé ou termine sa déconnexion.');
+   monarkPortClaims.add(port);claimed=true;closing=false;shuttingDown=null;lastTarget=null;paused=false;lastSample=null;link=new MonarkUSBLink(port,log);
+   try{await link.open();const id=await link.request('id',s=>/^(?:novo|lc[0-9]|mec)/i.test(s));d.name='Monark USB · '+id;const target=await link.number('B',0,2000);log('Consigne initiale relue : '+target+' W ; aucune consigne envoyée.');const power=await link.number('power',0,2000),cadence=await link.number('pedal',0,250);lastSample={power,cadence};d.gatt.connected=true;link.onFault=message=>{void shutdown(message);};document.addEventListener('visibilitychange',onVisibility);timer=setInterval(poll,1000);return d.gatt;}
+   catch(e){log('Connexion USB impossible : '+e.message);await shutdown(e.message);throw e;}
+  },
+  getPrimaryService:async id=>{if(id!==0x1826)throw Error('Service absent');return {getCharacteristic:async id=>{if(!chars.has(id))throw Error('Caractéristique absente');return chars.get(id);},getCharacteristics:async()=>[...chars.values()]};},
+  disconnect:()=>{void shutdown('déconnexion demandée ; vérifier la console.');}
+ };
+ const data=chars.get(0x2ad2);data.startNotifications=async()=>{data.active=true;notifySample();return data;};
+ return d;
+}
+
+const deviceOwners=new Map();
+function reserveDevice(id,slot,kind){const owner=deviceOwners.get(id);if(owner&&(owner.slot!==slot||owner.kind!==kind))throw Error('Cet appareil est déjà associé au vélo '+owner.slot+'. Le dissocier de cette fiche avant de le déplacer.');deviceOwners.set(id,{slot,kind});}
+function releaseDevice(id,slot,kind){const owner=deviceOwners.get(id);if(owner?.slot===slot&&owner.kind===kind)deviceOwners.delete(id);}
+function updateConnectedCount(){const total=document.querySelectorAll('[data-bike-card]').length,n=document.querySelectorAll('[data-bike-card][data-connected="true"]').length;document.getElementById('count').textContent=n+' / '+total+(total===1?' vélo connecté':' vélos connectés');}
+
+function workoutColorMap(steps){
+ const levels=[...new Set(steps.map(s=>s.watts))].sort((a,b)=>a-b),groups=[],levelGroup=new Map();
+ // Group nearby levels within 10% of this workout's full range, without chaining.
+ const tolerance=(levels.at(-1)-levels[0])*.1;
+ for(const watts of levels){if(!groups.length||watts-groups.at(-1)>tolerance)groups.push(watts);levelGroup.set(watts,groups.length-1);}
+ const fullPalette=['#45a86b','#398db4','#dfbf39','#ed9238','#d95656','#9467cc'];
+ const colors=groups.length===1?['#398db4']:groups.length===2?['#45a86b','#ed9238']:fullPalette.slice(0,Math.min(groups.length,6));
+ return {colors,indices:new Map(levels.map(w=>[w,groups.length<=6?levelGroup.get(w):Math.round(levelGroup.get(w)*5/(groups.length-1))]))};
+}
+function mountBike(root,slot){
+
+'use strict';
+const $=id=>root.querySelector('[data-id="'+id+'"]'),FTMS=0x1826,DIS=0x180a,HRS=0x180d;
+const bikes=new Map(),hearts=new Map();
+let bike=null,heart=null,cp=null,ftmsStatus=null,pending=null,controlled=false,busy=false,ready=false,poisoned=false,canRes=false,canW=false;
+let resScale=10,domyosLevels=false;
+let ergActive=false,ergTarget=0,ergEpoch=0,ergLast=0,ergAwait=null;
+let telemetry={},samples=[],levelMemory=new Map(),lastTelemetryLog=0;
+let nativeRange=null,restartReduced=false,programRun=null,programEpoch=0,programDirty=false,workoutView=null,capture=null,nativeTarget=null,subjectName='';
+function subjectMass(){const x=Number($('subjectMass').value);return Number.isFinite(x)&&x>0&&x<=500&&Math.abs(x*10-Math.round(x*10))<1e-6?x:null;}
+function requireMass(){
+ let mass=subjectMass();if(mass!==null)return mass;
+ const answer=window.prompt('Masse du sujet en kg (ex. 70 ou 70,5) :','');
+ if(answer===null)throw Error('Masse requise pour utiliser un programme en W/kg.');
+ const value=Number(answer.trim().replace(',','.'));
+ if(!answer.trim()||!Number.isFinite(value)||value<=0||value>500||Math.abs(value*10-Math.round(value*10))>1e-6)throw Error('Saisir une masse entre 0,1 et 500 kg, avec au plus une décimale.');
+ $('subjectMass').value=value;return value;
+}
+function resolveProgram(p,mass,forBike=false){
+ if(!hasRelativeSteps(p))return p;
+ if(mass===null)throw Error('Renseigner la masse du sujet pour ce programme en W/kg.');
+ const min=forBike?+$('watts').min:0,max=forBike?+$('watts').max:Infinity,increment=forBike?+$('watts').step:1;
+ const convert=x=>{const raw=x*mass;if(forBike&&(raw<min-1e-7||raw>max+1e-7))throw Error(x+' W/kg × '+mass+' kg = '+Number(raw.toFixed(2))+' W : hors plage du vélo ('+min+'–'+max+' W).');return Number((min+Math.round((raw-min)/increment)*increment).toFixed(4));};
+ return {...p,unit:'w',mass,name:p.name+' · '+mass+' kg',steps:p.steps.map(row=>(row.unit??p.unit)==='wkg'?({...row,unit:'w',displayTarget:{...row,unit:'wkg'},watts:convert(row.watts),...(row.ramp?{endWatts:convert(row.endWatts)}:{})}):({...row}))};
+}
+$('subjectMass').oninput=()=>{if(programRun)return;previewSelectedWorkout();syncProgramUnits();};
+function commitSubject(){
+ const name=$('subjectInput').value.trim().replace(/\s+/g,' ').slice(0,80);if(!name)return;
+ subjectName=name;$('subjectName').textContent=name;$('subjectForm').hidden=true;$('subjectDisplay').hidden=false;
+}
+$('subjectForm').onsubmit=e=>{e.preventDefault();commitSubject();};
+$('subjectInput').onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();commitSubject();}};
+$('clearSubject').onclick=()=>{subjectName='';$('subjectName').textContent='';$('subjectInput').value='';$('subjectDisplay').hidden=true;$('subjectForm').hidden=false;$('subjectInput').focus();};
+function externalAvailable(){return canRes;}
+function refreshPowerMode(){const native=$('powerMode').value==='native';$('nativeOption').disabled=!canW;$('externalPanel').hidden=native;if(native&&nativeRange)range('watts',nativeRange,1);else range('watts',{min:1,max:1500,step:1},1);$('wattInfo').textContent=native?(canW?'Cible envoyée directement au vélo.':'ERG natif non annoncé par le vélo.'):externalAvailable()?'La page ajuste la résistance selon les watts reçus.':'Connecter un vélo avec contrôle de résistance pour utiliser ce mode.';setEnabled();}
+
+function stopErg(reason,keepProgram=false){if(!keepProgram)cancelProgram(reason);restartReduced=false;ergActive=false;ergEpoch++;ergAwait=null;const t='Désactivée — '+reason;$('ergState').textContent=t;log(t);setEnabled();}
+function updateTelemetry(x,now=Date.now()){for(const k of ['power','cadence','resistance'])if(Number.isFinite(x[k]))telemetry[k]={v:x[k],at:now};if(Number.isFinite(x.power))samples.push({v:x.power,at:now,r:telemetry.resistance?.v,c:telemetry.cadence?.v});samples=samples.filter(s=>now-s.at<5000);if(now-lastTelemetryLog>=2000){lastTelemetryLog=now;log('Mesures : W='+telemetry.power?.v+' RPM='+telemetry.cadence?.v+' résistance='+telemetry.resistance?.v+' cible='+(ergActive?ergTarget:'inactive'));}}
+function ergPlan(t,ss,target,cap,min,max,step,now){
+ for(const k of ['power','cadence','resistance'])if(!t[k]||now-t[k].at>3000)return {wait:true,blocked:true,reason:'attente de mesures récentes ('+({power:'puissance',cadence:'cadence',resistance:'résistance'})[k]+')'};
+ if(t.cadence.v<30)return {wait:true,blocked:true,reason:'en attente du pédalage à partir de 30 tr/min'};
+ if(t.power.v<0||t.resistance.v<min||t.resistance.v>max)return {fault:'mesures hors plage'};
+ if(t.resistance.v>cap)return {fault:'résistance actuelle supérieure à la limite choisie'};
+ const recent=ss.filter(s=>now-s.at<3500);if(recent.length<2||recent[recent.length-1].at-recent[0].at<400)return {wait:true};
+ const mean=recent.reduce((a,b)=>a+b.v,0)/recent.length,delta=target-mean,tolerance=Math.max(5,target*.05);
+ if(Math.abs(delta)<=tolerance)return {hold:true,mean};
+ const level=Math.max(min,Math.min(max,cap,t.resistance.v+(delta>0?step:-step)));
+ return {level,mean,limited:level===t.resistance.v};
+}
+function settledSamples(now){return samples.filter(s=>s.at>=ergLast+350&&now-s.at<1800&&s.c>=30&&(s.r===undefined||Math.abs(s.r-telemetry.resistance?.v)<.01));}
+function preferCurrentLevel(current,next,mean,target,cadence,now){const old=levelMemory.get(next);return !!old&&now-old.at<20000&&Math.abs(old.cadence-cadence)<=3&&Math.abs(old.mean-target)+2>=Math.abs(mean-target);}
+async function easeRestart(){
+ const c=telemetry.cadence,low=!c||Date.now()-c.at>3000||c.v<30;
+ if(!low||restartReduced||busy||!ergActive||!canRes)return;
+ const epoch=ergEpoch,minimum=+$('res').min;
+ await action(async()=>{try{await withControl(async()=>{
+  const latest=telemetry.cadence;if(!ergActive||epoch!==ergEpoch||document.hidden||(latest&&Date.now()-latest.at<=3000&&latest.v>=30))return;
+  const sent=Date.now();await send(4,resistancePayload(minimum,domyosLevels));
+  if(ergActive&&epoch===ergEpoch){restartReduced=true;ergLast=sent;ergAwait={level:minimum,sent,waitSince:sent};samples=[];levelMemory.clear();$('ergState').textContent='Active — cible '+ergTarget+' W · redémarrage facile, résistance minimale';}
+ });}catch(e){stopErg('baisse de résistance refusée');throw e;}});
+}
+async function ergTick(){
+ if(!ergActive)return;
+ if(document.hidden||!run||!ready||!bike?.gatt.connected||poisoned){stopErg('séance ou connexion interrompue');return;}
+ const now=Date.now(),cap=+$('res').max;
+ const health=ergPlan(telemetry,samples,ergTarget,cap,+$('res').min,cap,+$('res').step,now);
+ if(health.fault){stopErg(health.fault);return;}
+ if(health.blocked){samples=[];if(ergAwait)ergAwait.waitSince=now;$('ergState').textContent='Active — cible '+ergTarget+' W · '+health.reason;await easeRestart();return;}
+ restartReduced=false;
+ if(ergAwait){
+  if(telemetry.resistance.at>=ergAwait.sent&&Math.abs(telemetry.resistance.v-ergAwait.level)<.01){ergAwait=null;}
+  else {if(now-(ergAwait.waitSince??ergAwait.sent)>8000)stopErg('résistance non confirmée par le vélo');return;}
+ }
+ const plan=ergPlan(telemetry,settledSamples(now),ergTarget,cap,+$('res').min,cap,+$('res').step,now);
+ if(plan.wait){$('ergState').textContent='Active — cible '+ergTarget+' W · collecte des mesures';return;}
+ if(busy||now-ergLast<1200)return;
+ const currentLevel=telemetry.resistance.v,cadence=telemetry.cadence.v;
+ levelMemory.set(currentLevel,{mean:plan.mean,cadence,at:now});
+ if(plan.hold||plan.limited||preferCurrentLevel(currentLevel,plan.level,plan.mean,ergTarget,cadence,now)){
+  $('ergState').textContent=plan.limited?'Active — limite du vélo atteinte, cible non atteinte.':plan.hold?'Active — cible atteinte (environ '+Math.round(plan.mean)+' W).':'Active — palier le plus proche de la cible ('+Math.round(plan.mean)+' W).';return;
+ }
+ const epoch=ergEpoch;
+ await action(async()=>{try{await withControl(async()=>{
+  if(!ergActive||epoch!==ergEpoch||document.hidden)return;
+  const current=ergPlan(telemetry,settledSamples(Date.now()),ergTarget,cap,+$('res').min,cap,+$('res').step,Date.now());
+  if(current.fault){stopErg(current.fault);return;}if(current.wait||current.hold||current.limited)return;
+  const sent=Date.now();ergLast=sent;
+  await send(4,resistancePayload(current.level,domyosLevels));
+  if(ergActive&&epoch===ergEpoch){ergAwait={level:current.level,sent};$('ergState').textContent='Active — '+Math.round(current.mean)+' / '+ergTarget+' W · résistance '+current.level;log('Régulation : cible='+ergTarget+' moyenne='+current.mean+' cadence='+telemetry.cadence.v+' niveau='+current.level);}
+ });}catch(e){stopErg('commande refusée ou connexion en défaut');throw e;}});
+}
+
+let lastBike=0,lastHr=0,elapsed=0,started=0,run=false,sessionState='stopped',logs=[];
+function updateFitButton(){const available=!!(capture?.stopped&&capture.samples.length);$('exportFit').disabled=!available;$('exportCsv').disabled=!available;$('exportCsv').title=available?'Exporter les mesures au format CSV':'Export CSV disponible après Stop, avec des mesures enregistrées';$('exportFit').title=available?'Exporter la séance au format FIT ('+capture.samples.length+' points)':'Export FIT disponible après Stop, avec des mesures enregistrées';}
+function captureSample(){
+ if(!capture||capture.paused||capture.stopped)return;
+ const now=Date.now(),value=(key,max)=>{const m=telemetry[key];return m&&now-m.at<=3000&&Number.isFinite(m.v)&&m.v>=0&&m.v<=max?m.v:undefined;};
+ const power=value('power',65534),cadence=value('cadence',254),hrValue=lastHr&&now-lastHr<=5000?Number($('hr').textContent):NaN,hr=Number.isFinite(hrValue)&&hrValue>=0&&hrValue<=254?hrValue:undefined;
+ if(power===undefined&&cadence===undefined&&hr===undefined)return;
+ const sample={t:now,csvAt:now,realSeconds:(performance.now()-capture.startMono)/1000,activeSeconds:(capture.timerMs+performance.now()-capture.activeSince)/1000,target:ergActive?ergTarget:nativeTarget,workoutStep:programRun?programRun.index+1:undefined,workoutRamp:!!programRun?.steps[programRun.index]?.ramp,resistance:value('resistance',65534),power:power===undefined?undefined:Math.round(power),cadence,hr},last=capture.samples.at(-1);
+ if(last&&Math.floor(last.t/1000)===Math.floor(now/1000)){sample.t=last.t;capture.samples[capture.samples.length-1]=sample;}else capture.samples.push(sample);
+}
+function startCapture(){
+ if(!run){if(sessionState==='stopped')elapsed=0;started=performance.now();run=true;sessionState='running';$('session').textContent='Séance en cours';}
+ if(!capture||capture.stopped)capture={startMs:Date.now(),startMono:performance.now(),endMs:null,timerMs:0,activeSince:performance.now(),paused:true,stopped:false,samples:[],events:[],bikeName:bike?.name||'Vélo '+slot};
+ if(capture.paused){capture.paused=false;capture.activeSince=performance.now();capture.events.push({t:Date.now(),type:0});}
+ captureSample();updateFitButton();
+}
+function pauseCapture(){if(!capture||capture.paused||capture.stopped)return;captureSample();capture.timerMs+=performance.now()-capture.activeSince;capture.paused=true;capture.events.push({t:Date.now(),type:1});}
+function finishCapture(){
+ if(!capture||capture.stopped)return;
+ captureSample();if(!capture.paused)capture.timerMs+=performance.now()-capture.activeSince;capture.paused=true;capture.stopped=true;capture.endMs=Date.now();capture.events.push({t:capture.endMs,type:4});updateFitButton();
+}
+function exportName(extension){
+ if(!subjectName){
+  const answer=window.prompt('Nom du sujet / patient pour le fichier exporté (laisser vide pour « Sans_nom ») :',$('subjectInput').value.trim());
+  if(answer===null)return null;
+  if(answer.trim()){$('subjectInput').value=answer;commitSubject();}
+ }
+ const subject=subjectName.normalize('NFKC').replace(/[<>:"/\\|?*\u0000-\u001f]/g,' ').trim().replace(/\s+/g,'_').replace(/[. ]+$/g,'').slice(0,80)||'Sans_nom';
+ const d=new Date(capture.startMs),pad=n=>String(n).padStart(2,'0');
+ return subject+'_'+d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'_'+pad(d.getHours())+'h'+pad(d.getMinutes())+'m'+pad(d.getSeconds())+'s.'+extension;
+}
+function downloadSession(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function csvHour(ms){const d=new Date(ms),pad=(n,size=2)=>String(n).padStart(size,'0'),offset=-d.getTimezoneOffset();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+'.'+pad(d.getMilliseconds(),3)+(offset>=0?'+':'-')+pad(Math.floor(Math.abs(offset)/60))+':'+pad(Math.abs(offset)%60);}
+function encodeCSV(){
+ const mass=subjectMass();
+ const number=x=>Number.isFinite(x)?String(Math.round(x*1000)/1000).replace('.',','):'';
+ const lines=['Heure;Temps réel écoulé (s);Temps actif (s);Puissance cible (W);Puissance mesurée (W);Cadence (tr/min);Résistance;Fréquence cardiaque (bpm);Étape;Rampe;Puissance mesurée (W/kg)'];
+ for(const p of capture.samples)lines.push([csvHour(p.csvAt),...[p.realSeconds,p.activeSeconds,p.target,p.power,p.cadence,p.resistance,p.hr].map(number),number(p.workoutStep),p.workoutRamp?'Rampe':'',number(mass!==null&&Number.isFinite(p.power)?p.power/mass:undefined)].join(';'));
+ return '\ufeff'+lines.join('\r\n')+'\r\n';
+}
+$('exportFit').onclick=()=>{try{if(!capture?.stopped||!capture.samples.length)return;const name=exportName('fit');if(!name)return;downloadSession(new Blob([encodeFIT(capture)],{type:'application/octet-stream'}),name);$('command').textContent='Fichier FIT exporté : '+capture.samples.length+' points de mesure.';}catch(e){error(e)}};
+$('exportCsv').onclick=()=>{try{if(!capture?.stopped||!capture.samples.length)return;const name=exportName('csv');if(!name)return;downloadSession(new Blob([encodeCSV()],{type:'text/csv;charset=utf-8'}),name);$('command').textContent='Fichier CSV exporté : '+capture.samples.length+' points de mesure (au maximum 1 par seconde).';}catch(e){error(e)}};
+
+const fmt=s=>{s=Math.floor(s);return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`};
+function log(t){logs.push(`${new Date().toISOString()} ${t}`);logs=logs.slice(-600);$('log').textContent=logs.join('\n');}
+function error(e){log('ERREUR '+e.message);$('command').textContent=e.message;}
+function hex(v){return Array.from(new Uint8Array(v.buffer,v.byteOffset,v.byteLength),x=>x.toString(16).padStart(2,'0')).join(' ')}
+function resistanceProfile(name,r){return /^domyos/i.test(name||'')&&!!r&&r.min>=0&&r.max<=32&&r.step>=1?{scale:1,oneByte:true}:{scale:10,oneByte:false};}
+function resistancePayload(x,oneByte){if(oneByte){if(!Number.isInteger(x)||x<0||x>255)throw Error('Niveau Domyos entier invalide.');return [x];}return int16(Math.round(x*10));}
+function parseBike(v,scale=10){let p=2;const f=v.getUint16(0,true),out={};function u(){const x=v.getUint16(p,true);p+=2;return x}function i(){const x=v.getInt16(p,true);p+=2;return x}function skip(n){if(p+n>v.byteLength)throw Error('Trame FTMS tronquée');p+=n}
+if(!(f&1))out.speed=u()/100;if(f&2)skip(2);if(f&4)out.cadence=u()/2;if(f&8)skip(2);if(f&16)skip(3);if(f&32)out.resistance=i()/scale;if(f&64)out.power=i();if(f&128)skip(2);if(f&256)skip(5);if(f&512)skip(1);if(f&1024)skip(1);if(f&2048)out.time=u();if(f&4096)skip(2);return out;}
+function setEnabled(){$('subjectMass').disabled=!!programRun;$('subjectMass').title=programRun?'Masse figée pendant le programme ; arrêter pour la modifier.':'';updateProgramNavigation();updateFitButton();const selected=programs.some(p=>p.id===$('programSelect').value);$('programEdit').disabled=!selected;$('programDelete').disabled=!selected;$('programStart').disabled=busy||!ready||poisoned||!(canW||canRes)||!!programRun||!selected||programDirty;$('programRunHint').textContent=programRun?'Programme en cours sur ce vélo.':programDirty?'Enregistrer les modifications avant de lancer.':!selected?'Choisir un programme enregistré ou en créer un.':!ready?'Connecter un vélo pour lancer le programme sélectionné.':'Prêt à lancer le programme sélectionné.';$('programPause').disabled=!programRun||busy;$('programStop').disabled=!programRun||busy;$('removeBike').disabled=busy||hrBusy;root.dataset.connected=String(!!(ready&&bike?.gatt.connected));updateConnectedCount();const on=ready&&bike?.gatt.connected&&!busy&&!poisoned;for(const id of ['play','pause','stop'])$(id).disabled=!on;for(const [field,ok,apply] of [['res',canRes,'applyRes'],['watts',$('powerMode').value==='native'?canW:externalAvailable(),'applyWatts']]){$(field).disabled=!(on&&ok);$(apply).disabled=!(on&&ok);root.querySelectorAll(`[data-step^="${field}:"]`).forEach(b=>b.disabled=!(on&&ok));}if(ergActive){$('applyWatts').disabled=false;$('watts').disabled=false;root.querySelectorAll('[data-step^=\"watts:\"]').forEach(b=>b.disabled=false);}$('applyWatts').textContent=ergActive?'Désactiver':$('powerMode').value==='native'?'Envoyer':'Activer';for(const id of ['pause','stop'])$(id).disabled=!ready||!bike?.gatt.connected;$('connect').disabled=busy||!!bike?.gatt.connected;$('scan').disabled=busy||!!bike?.gatt.connected;$('connectUsb').disabled=busy||!!bike?.gatt.connected;$('disconnect').disabled=!bike?.gatt.connected;}
+function pauseClock(){pauseCapture();if(run)elapsed+=performance.now()-started;run=false;}
+function lost(){finishCapture();nativeTarget=null;releaseDevice(bike?.id,slot,'bike');$('connectedName').textContent='Non connecté';stopErg('déconnexion vélo');telemetry={};samples=[];ready=false;detachControlListeners();cp=null;controlled=false;canRes=canW=false;lastBike=0;pauseClock();sessionState='paused';if(pending){clearTimeout(pending.timer);pending.reject(Error('Connexion perdue'));pending=null;}$('status').textContent='Déconnecté';$('session').textContent='Connexion perdue — chronomètre suspendu';for(const id of ['power','cadence','actualRes','bikeTime'])$(id).textContent='—';$('capabilities').textContent='Reconnecter puis vérifier les capacités.';setEnabled();log('Déconnexion vélo ; aucune reconnexion ni reprise automatique.');}
+function settleControl(q){
+ if(pending!==q||!q.written||q.code===undefined)return;
+ pending=null;clearTimeout(q.timer);
+ if(q.code===1)q.resolve();else q.reject(Error(`Commande 0x${q.op.toString(16)} refusée : ${{2:'commande non prise en charge',3:'paramètre invalide',4:'échec de commande',5:'contrôle non autorisé'}[q.code]||'erreur inconnue'} (code ${q.code}).`));
+}
+function onResponse(e){const v=e.target.value;log('FTMS réponse '+hex(v));if(v.byteLength>=3&&v.getUint8(0)===0x80&&pending&&v.getUint8(1)===pending.op){pending.code=v.getUint8(2);settleControl(pending);}}
+function onMachineStatus(e){log('FTMS état machine '+hex(e.target.value));}
+function detachControlListeners(){cp?.removeEventListener('characteristicvaluechanged',onResponse);ftmsStatus?.removeEventListener('characteristicvaluechanged',onMachineStatus);ftmsStatus=null;}
+async function send(op,payload=[]){
+ if(!cp||poisoned)throw Error('Contrôle indisponible : reconnecter pour un nouvel essai.');if(pending)throw Error('Une commande est déjà en cours.');
+ const control=cp;
+ await new Promise((resolve,reject)=>{
+  const q={op,resolve,reject,written:false,code:undefined,timer:null};pending=q;
+  q.timer=setTimeout(()=>{if(pending!==q)return;pending=null;poisoned=true;controlled=false;setEnabled();const reason=q.written?'Écriture '+(bike?.isUSB?'USB':'Bluetooth')+' confirmée, mais aucune réponse '+(bike?.isUSB?'du contrôle USB':'FTMS')+' à la commande 0x'+op.toString(16):'Écriture '+(bike?.isUSB?'USB':'Bluetooth')+' non confirmée pour la commande 0x'+op.toString(16);log('Contrôle bloqué : '+reason);reject(Error(reason+' : reconnecter avant une nouvelle commande.'));},8000);
+  log('FTMS envoi '+[op,...payload].map(x=>x.toString(16).padStart(2,'0')).join(' '));
+  Promise.resolve().then(()=>control.writeValueWithResponse(new Uint8Array([op,...payload]))).then(()=>{if(pending!==q)return;q.written=true;log('Écriture '+(bike?.isUSB?'USB':'Bluetooth')+' confirmée : 0x'+op.toString(16));settleControl(q);}).catch(e=>{if(pending!==q)return;pending=null;clearTimeout(q.timer);controlled=false;poisoned=true;log('Échec écriture '+(bike?.isUSB?'USB':'Bluetooth')+' : '+e.name+' — '+e.message);reject(e);});
+ });
+}
+async function withControl(fn){if(!cp)throw Error('Point de contrôle FTMS absent.');if(!controlled){await send(0);controlled=true;}await fn();}
+async function action(fn){if(busy)return;busy=true;setEnabled();try{await fn()}catch(e){error(e)}finally{busy=false;setEnabled()}}
+async function optional(service,id){try{return await service.getCharacteristic(id)}catch{return null}}
+async function readRange(service,id,signed){const c=await optional(service,id);if(!c)return null;try{const v=await c.readValue();log('Plage 0x'+id.toString(16)+' brute : '+hex(v));if(v.byteLength<6)return null;const min=signed?v.getInt16(0,true):v.getUint16(0,true),max=signed?v.getInt16(2,true):v.getUint16(2,true),step=v.getUint16(4,true);return max>=min&&step>0?{min,max,step}:null}catch{return null}}
+function range(field,r,scale){const el=$(field);el.min=r.min/scale;el.max=r.max/scale;el.step=r.step/scale;el.value=Math.max(+el.min,Math.min(+el.max,+el.value));}
+function validInput(field){const el=$(field),x=Number(el.value),min=+el.min,max=+el.max,step=+el.step;if(!el.value||!Number.isFinite(x)||x<min||x>max||Math.abs((x-min)/step-Math.round((x-min)/step))>1e-5)throw Error(`Valeur invalide : ${min} à ${max}, pas ${step}.`);return x}
+function int16(x){const a=new Uint8Array(2);new DataView(a.buffer).setInt16(0,x,true);return [...a]}
+async function pick(service,map,select){if(!navigator.bluetooth)throw Error('Ce navigateur ne fournit pas Web Bluetooth.');const d=await navigator.bluetooth.requestDevice({filters:[{services:[service]}],optionalServices:service===FTMS?[FTMS,DIS]:[HRS,DIS]});map.set(d.id,d);const sel=$(select);if(!Array.from(sel.options).some(o=>o.value===d.id)){const opt=document.createElement('option');opt.value=d.id;opt.textContent=d.name||'Appareil sans nom';sel.append(opt)}sel.value=d.id;log('Appareil choisi : '+(d.name||'sans nom')+' / identifiant navigateur '+d.id)}
+$('scan').onclick=()=>pick(FTMS,bikes,'bikes').catch(error);
+$('connectUsb').onclick=async()=>{
+ if(busy||bike?.gatt.connected)return;
+ if(!navigator.serial){error(Error('Monark USB nécessite Chrome ou Edge sur ordinateur, sur la page HTTPS.'));return;}
+ busy=true;setEnabled();let selected=false;
+ try{const port=await navigator.serial.requestPort(),d=makeMonarkUSBBike(port,log);bikes.set(d.id,d);const select=$('bikes');let option=[...select.options].find(o=>o.value===d.id);if(!option){option=document.createElement('option');option.value=d.id;select.append(option);}option.textContent=d.name;select.value=d.id;selected=true;const info=port.getInfo?.()||{};log('Port USB choisi : '+JSON.stringify(info)+' ; configuration 4800 bauds, 8N1, Monark PC mode.');}
+ catch(e){if(e.name!=='NotFoundError')error(e);}
+ finally{busy=false;setEnabled();}
+ if(selected)await $('connect').onclick();
+};
+$('connect').onclick=()=>action(async()=>{const d=bikes.get($('bikes').value);if(!d)throw Error('Scanner et sélectionner un vélo.');reserveDevice(d.id,slot,'bike');stopErg('nouvelle connexion');telemetry={};samples=[];bike=d;poisoned=false;controlled=false;canRes=canW=false;ready=false;d.removeEventListener('gattserverdisconnected',lost);d.addEventListener('gattserverdisconnected',lost);try{const server=await d.gatt.connect();const s=await server.getPrimaryService(FTMS);let serial='Non transmis';try{const info=await server.getPrimaryService(DIS),c=await info.getCharacteristic(0x2a25);serial=new TextDecoder().decode(await c.readValue()).replace(/\0/g,'').trim()||'Non transmis'}catch{}$('identity').textContent=`Nom : ${d.name||'Sans nom'} · Numéro de série : ${serial} · Identifiant navigateur : ${d.id}`;
+for(const c of await s.getCharacteristics())log('Caractéristique '+c.uuid+' lecture='+c.properties.read+' écriture='+c.properties.write+' notification='+c.properties.notify+' indication='+c.properties.indicate);
+let targets=0;try{const f=await(await s.getCharacteristic(0x2acc)).readValue();log('Capacités FTMS '+hex(f));if(f.byteLength>=8)targets=f.getUint32(4,true)}catch(e){log('Capacités non lisibles : '+e.message)}
+detachControlListeners();cp=await optional(s,0x2ad9);if(!(cp&&cp.properties.write&&cp.properties.indicate))cp=null;
+const rr=await readRange(s,0x2ad6,true),wr=await readRange(s,0x2ad8,true);canRes=!!cp&&!!(targets&4)&&!!rr;canW=!!cp&&!!(targets&8)&&!!wr;const profile=resistanceProfile(d.name,rr);resScale=profile.scale;domyosLevels=profile.oneByte;log('Profil résistance : '+(domyosLevels?'Domyos niveaux entiers / UINT8':'FTMS dixièmes / SINT16'));if(rr)range('res',rr,resScale);nativeRange=wr;if(wr)range('watts',wr,1);$('resInfo').textContent=canRes?`Plage annoncée : ${rr.min/resScale} à ${rr.max/resScale}, pas ${rr.step/resScale}. Profil : ${domyosLevels?'Domyos niveaux entiers':'FTMS'}.`:'Commande standard ou plage non annoncée : désactivée.';$('wattInfo').textContent=canW?`Cible native : ${wr.min} à ${wr.max} W, pas ${wr.step} W.`:externalAvailable()?'Régulation externe expérimentale : ajuste les niveaux de résistance.':'Cible native et régulation externe indisponibles pour ce vélo.';
+$('powerMode').value=canW?'native':'external';refreshPowerMode();
+const data=await s.getCharacteristic(0x2ad2);data.addEventListener('characteristicvaluechanged',e=>{try{const x=parseBike(e.target.value,resScale);lastBike=Date.now();updateTelemetry(x,lastBike);captureSample();for(const [key,id] of [['power','power'],['cadence','cadence'],['resistance','actualRes']])if(x[key]!==undefined)$(id).textContent=x[key];if(x.time!==undefined)$('bikeTime').textContent=fmt(x.time);}catch(e){log('Données rejetées : '+e.message)}});await data.startNotifications();log('Notifications des mesures activées (2ad2).');
+ftmsStatus=await optional(s,0x2ada);if(ftmsStatus?.properties.notify){try{ftmsStatus.addEventListener('characteristicvaluechanged',onMachineStatus);await ftmsStatus.startNotifications();log('Notifications état machine activées (2ada).');}catch(e){ftmsStatus.removeEventListener('characteristicvaluechanged',onMachineStatus);ftmsStatus=null;log('État machine non disponible : '+e.message);}}
+if(cp){cp.addEventListener('characteristicvaluechanged',onResponse);await cp.startNotifications();log('Indications du contrôle activées en dernier (2ad9).');}
+ready=true;sessionState='stopped';$('session').textContent='Séance arrêtée';$('status').textContent='Connecté';$('connectedName').textContent=d.name||'Vélo sans nom';$('connections').open=false;$('capabilities').textContent=`Résistance : ${canRes?'annoncée':'indisponible'} · ERG natif : ${canW?'oui':'non'} · Régulation par résistance : ${canRes?'disponible':'indisponible'} · Commandes à confirmer par leur réponse.`;if(d.isUSB){$('wattInfo').textContent='Monark USB : cible 0–700 W, pas 1 W (limite logicielle de ce premier essai).';$('resInfo').textContent='Résistance manuelle non exposée par cette liaison USB.';$('compat').textContent='USB 4800 bauds · PC mode. Pause/Stop demandent 0 W. Premier essai hors patient.';log('USB : caractéristiques FTMS virtuelles ; commandes réelles Monark ASCII, consigne relue avec B.');}log('TR Bike v0.39 — connecté, aucune commande de charge envoyée automatiquement.');}catch(e){d.gatt.disconnect();lost();throw e}});
+$('disconnect').onclick=()=>{stopErg('déconnexion demandée');bike?.gatt.disconnect();};
+$('applyRes').onclick=()=>{stopErg('passage en résistance manuelle');return action(async()=>{const x=validInput('res');await withControl(()=>send(4,resistancePayload(x,domyosLevels)));nativeTarget=null;$('command').textContent=`Consigne résistance ${x} acceptée par le vélo. Vérifier la valeur reçue.`;log($('command').textContent)});};
+async function setPowerTarget(x,guard=()=>true){
+ if(!guard())return false;
+ $('watts').value=x;validInput('watts');
+ if($('powerMode').value==='native'){
+  if(!canW)throw Error('ERG natif indisponible.');
+  await withControl(()=>guard()?send(5,int16(x)):Promise.resolve());if(!guard())return false;
+  nativeTarget=x;$('command').textContent='Consigne native '+x+' W acceptée par le vélo.';startCapture();return true;
+ }
+ if(!externalAvailable())throw Error('Régulation externe indisponible pour ce vélo.');nativeTarget=null;if(document.hidden)throw Error('Garder la page visible.');
+ const plan=ergPlan(telemetry,samples,x,+$('res').max,+$('res').min,+$('res').max,+$('res').step,Date.now());if(plan.fault)throw Error(plan.fault);
+ if(!run){if(sessionState==='stopped')elapsed=0;started=performance.now();run=true;sessionState='running';$('session').textContent='Séance en cours — régulation par la page';}
+ if(!ergActive){ergEpoch++;restartReduced=false;ergAwait=null;ergLast=Date.now()-1200;}
+ levelMemory.clear();ergTarget=x;ergActive=true;$('ergState').textContent='Active — cible '+x+' W'+(plan.wait?' · attente du pédalage et des mesures':'');$('command').textContent='Cible externe '+x+' W : réglage progressif.';log($('ergState').textContent);startCapture();return true;
+}
+$('applyWatts').onclick=()=>{if(ergActive){stopErg('arrêt demandé');$('command').textContent='Résistance conservée.';return;}cancelProgram('cible manuelle');return action(()=>setPowerTarget(validInput('watts')));};
+$('powerMode').onchange=()=>{stopErg('mode modifié');refreshPowerMode();};
+
+const onVisibility=()=>{if(document.hidden&&(ergActive||programRun))stopErg('page masquée');};document.addEventListener('visibilitychange',onVisibility);
+function showPowerAvailability(){
+let message='';
+if(!ready||!bike?.gatt.connected)message='Connecter le vélo pour activer une cible.';
+else if(poisoned)message='Commande sans réponse : reconnecter le vélo.';
+else if($('powerMode').value==='native')message=canW?'ERG natif disponible.':'ERG natif non annoncé : choisir Régulation par résistance.';
+else if(!canRes)message='Contrôle de résistance indisponible : exporter le diagnostic.';
+else if(ergActive)message='Cible : '+ergTarget+' W';
+else {try{const plan=ergPlan(telemetry,samples,validInput('watts'),+$('res').max,+$('res').min,+$('res').max,+$('res').step,Date.now());message=plan.fault?'Activation en attente : '+plan.fault:plan.wait?'Cible activable — '+(plan.reason||'attente des mesures')+'.':'Prêt à activer.';}catch(e){message=e.message;}}
+$('powerAvailability').textContent=message;
+}
+const regulationTimer=setInterval(()=>{showPowerAvailability();programTick().catch(e=>{stopErg('programme interrompu');error(e)});ergTick().catch(error)},250);
+function updateLiveTarget(){
+ if(!ergActive){if(programRun&&$('powerMode').value==='native'){try{const x=validInput('watts');cancelProgram('cible modifiée manuellement');return action(()=>setPowerTarget(x));}catch(e){error(e)}}return;}
+ try{const x=validInput('watts');if(x===ergTarget)return;cancelProgram('cible modifiée manuellement');ergTarget=x;levelMemory.clear();$('ergState').textContent='Active — cible '+x+' W';$('command').textContent='Nouvelle cible : '+x+' W. Régulation en cours.';log('Cible modifiée en cours de régulation : '+x+' W');}
+ catch(e){error(e);$('watts').value=ergTarget;}
+}
+$('watts').onchange=updateLiveTarget;
+$('watts').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();updateLiveTarget();}};
+for(const b of root.querySelectorAll('[data-step]'))b.onclick=()=>{const [id,delta]=b.dataset.step.split(':'),el=$(id),step=+el.step,base=+el.min;const v=Number(el.value)+Math.sign(+delta)*Math.max(Math.abs(+delta),step);el.value=Math.max(base,Math.min(+el.max,base+Math.round((v-base)/step)*step));if(id==='watts')updateLiveTarget();};
+$('play').onclick=()=>action(async()=>{if(run)return;const epoch=ergEpoch;if(cp)await withControl(()=>send(7));if(epoch!==ergEpoch)return;if(sessionState==='stopped')elapsed=0;started=performance.now();run=true;sessionState='running';startCapture();$('session').textContent=cp?'Séance en cours — démarrage accepté':'Chronomètre local en cours (contrôle vélo indisponible)'});
+$('pause').onclick=()=>{stopErg('pause');pauseClock();sessionState='paused';$('session').textContent='Chronomètre en pause';return action(async()=>{$('session').textContent='Chronomètre en pause';if(cp){await withControl(()=>send(8,[2]));$('session').textContent='Pause acceptée par le vélo'}});};
+$('stop').onclick=()=>{finishCapture();nativeTarget=null;stopErg('stop');pauseClock();sessionState='stopped';$('session').textContent='Chronomètre arrêté';return action(async()=>{$('session').textContent='Chronomètre arrêté';if(cp){await withControl(()=>send(8,[1]));$('session').textContent='Stop accepté — vérifier le vélo'}});};
+$('reset').onclick=()=>{if(run){$('command').textContent='Mettre en pause avant de remettre le temps à zéro.';return;}finishCapture();elapsed=0;$('time').textContent='00:00'};
+$('scanHr').onclick=()=>pick(HRS,hearts,'hrs').catch(error);
+function detachHr(){releaseDevice(heart?.id,slot,'heart');heart?.gatt.disconnect();heart=null;lastHr=0;$('hr').textContent='—';$('hrName').textContent='Aucune ceinture associée';$('disconnectHr').disabled=true;}
+let hrBusy=false;
+$('connectHr').onclick=async()=>{if(hrBusy)return;hrBusy=true;$('removeBike').disabled=true;$('connectHr').disabled=true;$('disconnectHr').disabled=true;let d,claimed=false;try{d=hearts.get($('hrs').value);if(!d)throw Error('Scanner et choisir une ceinture.');if(heart?.id===d.id&&heart.gatt.connected)return;reserveDevice(d.id,slot,'heart');claimed=true;detachHr();reserveDevice(d.id,slot,'heart');heart=d;d.addEventListener('gattserverdisconnected',()=>{if(heart===d){releaseDevice(d.id,slot,'heart');lastHr=0;$('hr').textContent='—';$('hrName').textContent='Ceinture déconnectée : '+(d.name||d.id);$('disconnectHr').disabled=true;}});const g=await d.gatt.connect(),s=await g.getPrimaryService(HRS),c=await s.getCharacteristic(0x2a37);c.addEventListener('characteristicvaluechanged',e=>{const v=e.target.value;try{const flags=v.getUint8(0),contactSupported=!!(flags&4),contactDetected=!!(flags&2);lastHr=Date.now();$('hr').textContent=contactSupported&&!contactDetected?'—':flags&1?v.getUint16(1,true):v.getUint8(1)}catch{log('Trame cardio tronquée')}});await c.startNotifications();$('hrName').textContent=`Ceinture du vélo ${slot} : ${d.name||'Sans nom'} · ID : ${d.id}`;$('disconnectHr').disabled=false;log('Ceinture associée '+d.name+' / '+d.id)}catch(e){if(claimed){if(d?.gatt.connected)d.gatt.disconnect();releaseDevice(d?.id,slot,'heart');}error(e)}finally{hrBusy=false;setEnabled();$('connectHr').disabled=false;$('disconnectHr').disabled=!heart?.gatt.connected;}};
+$('disconnectHr').onclick=detachHr;
+$('export').onclick=()=>{const blob=new Blob(['TR Bike v0.39 — vélo '+slot+'\nMode puissance : '+$('powerMode').value+'\n'+$('identity').textContent+'\n'+$('capabilities').textContent+'\n'+logs.join('\n')],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='diagnostic_tr_bike_'+slot+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+const displayTimer=setInterval(()=>{captureSample();$('time').textContent=fmt((elapsed+(run?performance.now()-started:0))/1000);const age=lastBike?(Date.now()-lastBike)/1000:Infinity;$('fresh').textContent=age===Infinity?'Aucune donnée reçue':age>5?`Données anciennes (${Math.floor(age)} s)`:'Données en direct';if(age>5)for(const id of ['power','cadence','actualRes','bikeTime'])$(id).textContent='—';if(!lastHr||Date.now()-lastHr>5000)$('hr').textContent='—';},250);
+$('removeBike').onclick=()=>{
+ if(busy||hrBusy)return;
+ if(!window.confirm('Retirer le vélo '+slot+' de la page ? Sa régulation sera arrêtée et son vélo et sa ceinture seront déconnectés.'))return;
+ stopErg('fiche retirée');pauseClock();clearInterval(regulationTimer);clearInterval(displayTimer);document.removeEventListener('visibilitychange',onVisibility);window.removeEventListener('scroll',hideWorkoutTooltip,true);window.removeEventListener('resize',hideWorkoutTooltip);document.removeEventListener('keydown',onWorkoutKey);document.removeEventListener('pointerdown',onWorkoutOutside);programViews.delete(refreshProgramChoices);
+ detachControlListeners();
+ bike?.removeEventListener('gattserverdisconnected',lost);releaseDevice(bike?.id,slot,'bike');bike?.gatt.disconnect();detachHr();
+ ready=false;cp=null;root.remove();updateLayout();document.getElementById('addBike').focus();
+};
+function cancelProgram(reason){
+ programEpoch++;
+ if(programRun){updateWorkoutProgress(programRun,reason==='Programme terminé'?'Terminé':'Arrêté');programRun=null;$('programState').textContent='Programme arrêté — '+reason;}
+ $('programPause').textContent='Pause';
+}
+function workoutTargetLabel(step,ms=0){
+ const source=step.displayTarget||step,relative=source.unit==='wkg',value=stepPower(source,ms);
+ return (relative?Number(value.toFixed(2)).toLocaleString('fr-FR',{maximumFractionDigits:2}):String(Math.round(value)))+' '+(relative?'W/kg':'W');
+}
+function hideWorkoutTooltip(){$('workoutTooltip').hidden=true;}
+function showWorkoutTooltip(e){
+ const v=workoutView,chart=$('workoutChart'),box=chart.getBoundingClientRect();if(!v||$('workout').hidden||box.width<=0){hideWorkoutTooltip();return;}
+ const time=Math.max(0,Math.min(v.total,(e.clientX-box.left)/box.width*v.total));let lo=0,hi=v.steps.length-1;
+ while(lo<hi){const middle=Math.floor((lo+hi)/2);if(v.prefix[middle+1]<=time)lo=middle+1;else hi=middle;}
+ const index=lo,step=v.steps[index],local=Math.min(step.seconds,Math.max(0,time-v.prefix[index])),tip=$('workoutTooltip');
+ tip.replaceChildren();
+ function line(text,kind='span',className=''){const node=document.createElement(kind);node.textContent=text;if(className)node.className=className;tip.append(node);}
+ line('Étape '+(index+1)+' / '+v.steps.length+' · '+(step.ramp?'Rampe':'Palier constant'),'strong');
+ line('Durée : '+fmt(step.seconds)+' · '+fmt(v.prefix[index])+' → '+fmt(v.prefix[index+1]),'span','tooltip-detail');
+ line('Puissance cible : '+workoutTargetLabel(step)+(step.ramp?' → '+workoutTargetLabel(step,step.seconds*1000):''),'span','tooltip-target');
+ if(step.displayTarget?.unit==='wkg')line('Équivalent : ≈ '+Math.round(step.watts)+(step.ramp?' → '+Math.round(step.endWatts):'')+' W','span','tooltip-detail');
+ line('Dans l’étape : '+fmt(local)+' / '+fmt(step.seconds),'span','tooltip-detail');
+ if(step.ramp)line('Cible au pointeur : '+workoutTargetLabel(step,local*1000));
+ tip.hidden=false;const bounds=tip.getBoundingClientRect(),width=window.innerWidth,height=window.innerHeight;
+ tip.style.left=Math.max(8,Math.min(e.clientX+14,width-bounds.width-8))+'px';
+ const y=e.clientY-bounds.height-12;tip.style.top=Math.max(8,Math.min(y>=8?y:e.clientY+16,height-bounds.height-8))+'px';
+}
+function onWorkoutKey(e){if(e.key==='Escape')hideWorkoutTooltip();}
+function onWorkoutOutside(e){if(!$('workoutChart').contains(e.target))hideWorkoutTooltip();}
+$('workoutChart').onpointermove=showWorkoutTooltip;$('workoutChart').onpointerdown=showWorkoutTooltip;$('workoutChart').onpointerleave=hideWorkoutTooltip;
+window.addEventListener('scroll',hideWorkoutTooltip,true);window.addEventListener('resize',hideWorkoutTooltip);document.addEventListener('keydown',onWorkoutKey);document.addEventListener('pointerdown',onWorkoutOutside);
+function renderWorkout(p){
+ hideWorkoutTooltip();
+ const steps=Array.from({length:p.repeats},()=>p.steps).flat().map(s=>({...s})),prefix=[0];for(const s of steps)prefix.push(prefix.at(-1)+s.seconds);
+ const total=prefix.at(-1),peak=Math.max(...p.steps.flatMap(s=>[s.watts,s.ramp?s.endWatts:s.watts]));workoutView={steps,prefix,total,peak,axisMax:Math.max(10,Math.ceil(peak*1.25/10)*10),measured:[],lastMeasurementAt:null,breakNext:true};
+ $('workout').hidden=false;$('workoutName').textContent=p.name;$('workoutMeasured').textContent='Puissance mesurée : —';
+ const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 1000 120');svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('role','img');
+ const targets=document.createElementNS(ns,'g');targets.dataset.workoutTargets='';svg.append(targets);
+ const shade=document.createElementNS(ns,'rect');shade.dataset.workoutShade='';shade.setAttribute('x','0');shade.setAttribute('y','0');shade.setAttribute('height','120');shade.setAttribute('width','0');shade.setAttribute('fill','var(--card)');shade.setAttribute('opacity','.35');svg.append(shade);
+ for(const name of ['halo','trace']){const path=document.createElementNS(ns,'path');path.dataset.workoutMeasured=name;path.setAttribute('class','workout-measured-'+name);path.setAttribute('fill','none');svg.append(path);}
+ const point=document.createElementNS(ns,'circle');point.dataset.workoutMeasuredPoint='';point.setAttribute('r','2');point.setAttribute('class','workout-measured-point');point.setAttribute('visibility','hidden');svg.append(point);
+ const line=document.createElementNS(ns,'line');line.dataset.workoutLine='';line.setAttribute('class','workout-progress');line.setAttribute('x1','1');line.setAttribute('x2','1');line.setAttribute('y1','0');line.setAttribute('y2','120');svg.append(line);$('workoutChart').replaceChildren(svg);
+ drawWorkoutTargets();updateWorkoutProgress({index:0,elapsed:0},'Prêt');
+}
+function drawWorkoutTargets(){
+ const v=workoutView;if(!v)return;
+ const {colors,indices}=workoutColorMap(v.steps),paths=colors.map(()=>'');
+ for(let i=0;i<v.steps.length;i++){const s=v.steps[i],x=v.prefix[i]/v.total*1000,right=v.prefix[i+1]/v.total*1000,y=116-s.watts/v.axisMax*100,color=indices.get(s.watts);paths[color]+=`M${x.toFixed(3)},116V${y.toFixed(2)}L${Math.max(x,right-.25).toFixed(3)},${(116-(s.ramp?s.endWatts:s.watts)/v.axisMax*100).toFixed(2)}V116Z`;}
+ $('workout').style.setProperty('--workout-colors',colors.length===1?colors[0]:'linear-gradient(to right,'+colors.join(',')+')');
+ const group=$('workoutChart').querySelector('[data-workout-targets]');group.replaceChildren();paths.forEach((d,i)=>{if(!d)return;const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',d);path.setAttribute('fill',colors[i]);group.append(path);});$('workoutScale').textContent='0–'+v.axisMax+' W';$('workoutChart').querySelector('svg').dataset.axisWatts=v.axisMax;
+}
+function recordWorkoutPower(r){
+ const v=workoutView,m=telemetry.power;if(!v||programRun!==r||r.state!=='running'||!m||Date.now()-m.at>3000||m.v<0||!Number.isFinite(m.v)||m.at===v.lastMeasurementAt)return;
+ const t=Math.min(v.total,v.prefix[r.index]+Math.min(r.elapsed/1000,r.steps[r.index].seconds)),last=v.measured.at(-1);
+ v.measured.push({t,w:m.v,gap:v.breakNext||!!last&&(m.at-v.lastMeasurementAt>3000||t-last.t>3)});v.lastMeasurementAt=m.at;v.breakNext=false;
+ if(m.v>v.axisMax){v.axisMax=Math.ceil(m.v*1.15/10)*10;drawWorkoutTargets();}
+ const parts=[];for(const [i,p] of v.measured.entries()){const x=p.t/v.total*1000,y=116-p.w/v.axisMax*100;parts.push((i===0||p.gap?'M':'L')+x.toFixed(2)+','+y.toFixed(2));}
+ const d=parts.join(' '),chart=$('workoutChart');for(const path of chart.querySelectorAll('[data-workout-measured]'))path.setAttribute('d',d);
+ const point=chart.querySelector('[data-workout-measured-point]');point.setAttribute('cx',t/v.total*1000);point.setAttribute('cy',116-m.v/v.axisMax*100);point.setAttribute('visibility','visible');$('workoutMeasured').textContent='Puissance mesurée : '+Math.round(m.v)+' W';
+}
+function updateWorkoutProgress(r,status){
+ updateProgramNavigation();
+ if(!workoutView)return;if(/pause|attente/i.test(status))workoutView.breakNext=true;const v=workoutView,index=Math.min(r.index,v.steps.length-1),elapsed=Math.max(0,Math.min(v.total,v.prefix[index]+r.elapsed/1000)),x=Math.max(1,Math.min(999,elapsed/v.total*1000));
+ const svg=$('workoutChart');for(const attr of ['x1','x2'])svg.querySelector('[data-workout-line]').setAttribute(attr,x);svg.querySelector('[data-workout-shade]').setAttribute('width',elapsed/v.total*1000);
+ $('workoutElapsed').textContent=fmt(elapsed);$('workoutRemaining').textContent=fmt(Math.ceil(Math.max(0,v.total-elapsed)));$('workoutStatus').textContent=status;$('workoutStep').textContent=(index+1)+' / '+v.steps.length;
+ const currentStep=v.steps[index],stepSeconds=Math.min(currentStep.seconds,Math.max(0,r.elapsed/1000));
+ $('workoutStepTime').textContent='Temps étape : '+fmt(stepSeconds)+' / '+fmt(currentStep.seconds);
+ $('workoutTarget').textContent=workoutTargetLabel(currentStep,r.elapsed);
+ $('workoutTargetInfo').textContent=(currentStep.ramp?'Rampe':'Palier constant')+(currentStep.displayTarget?.unit==='wkg'?' · ≈ '+Math.round(stepPower(currentStep,r.elapsed))+' W':'');svg.querySelector('svg').setAttribute('aria-label','Profil de puissance, '+status+', temps écoulé '+fmt(elapsed)+', restant '+fmt(Math.ceil(Math.max(0,v.total-elapsed))));
+}
+function previewSelectedWorkout(){if(programRun)return;hideWorkoutTooltip();const p=programs.find(p=>p.id===$('programSelect').value);if(p&&(!hasRelativeSteps(p)||subjectMass()!==null))renderWorkout(resolveProgram(p,subjectMass()));else{$('workout').hidden=true;workoutView=null;if(p&&hasRelativeSteps(p))programNotice('Ce programme contient des étapes en W/kg : renseigner la masse du sujet au-dessus pour afficher le profil et calculer les watts.');}}
+
+function programNotice(message,kind='info'){$('programNotice').textContent=message;$('programNotice').dataset.kind=kind;}
+function markProgramDirty(){programDirty=true;programNotice('Modifications non enregistrées. Cliquer sur « Enregistrer le programme ».');setEnabled();}
+function refreshProgramChoices(){
+ const selected=$('programSelect').value,select=$('programSelect');select.replaceChildren(new Option('Aucun entraînement',''));
+ for(const p of programs)select.append(new Option(p.name+(hasRelativeSteps(p)?' · W/kg':''),p.id));
+ if(programs.some(p=>p.id===selected))select.value=selected;
+ if(selected&&!select.value&&!programRun){previewSelectedWorkout();loadProgramEditor(null);programDirty=false;$('programEditor').open=false;}
+ setEnabled();
+}
+function addProgramRow(seconds=60,watts=50,ramp=false,endWatts=watts,relative=false){
+ const tr=document.createElement('tr');
+ for(const [kind,value,max] of [['seconds',seconds,86400],['watts',watts,1500]]){const td=document.createElement('td'),input=document.createElement('input');input.type='number';input.min=1;input.max=max;input.step=1;input.value=value;input.dataset.kind=kind;input.setAttribute('aria-label',kind==='seconds'?'Durée en secondes':'Puissance en watts');const label=document.createElement('label'),text=document.createElement('span');text.textContent=kind==='seconds'?'Durée (s)':'Puissance (W)';label.append(text,input);td.append(label);tr.append(td);}
+ const rampCell=document.createElement('td'),check=document.createElement('input');check.type='checkbox';check.dataset.kind='ramp';check.checked=ramp;check.setAttribute('aria-label','Rampe');const rampLabel=document.createElement('label');rampLabel.append(check,document.createTextNode(' Rampe'));rampCell.append(rampLabel);rampCell.className='ramp-choice';tr.append(rampCell);
+ const unitCheck=document.createElement('input');unitCheck.type='checkbox';unitCheck.dataset.kind='wkg';unitCheck.checked=relative;unitCheck.setAttribute('aria-label','W/kg pour cette étape');const unitLabel=document.createElement('label');unitLabel.append(unitCheck,document.createTextNode(' W/kg'));rampCell.append(unitLabel);
+ let previousRelative=relative;const remembered={};
+ unitCheck.onchange=()=>{const next=unitCheck.checked;remembered[previousRelative?'wkg':'w']=['watts','endWatts'].map(kind=>tr.querySelector('[data-kind='+kind+']').value);const values=remembered[next?'wkg':'w']||['',''];['watts','endWatts'].forEach((kind,i)=>tr.querySelector('[data-kind='+kind+']').value=values[i]);previousRelative=next;syncProgramUnits();markProgramDirty();programNotice('Saisir les puissances de cette étape en '+(next?'W/kg':'watts')+'. Les autres étapes restent inchangées.');tr.querySelector('[data-kind=watts]').focus();};
+ const endCell=document.createElement('td'),end=document.createElement('input');end.type='number';end.min=1;end.max=1500;end.step=1;end.value=endWatts;end.dataset.kind='endWatts';end.setAttribute('aria-label','Puissance d’arrivée en watts');end.disabled=!ramp;end.hidden=!ramp;const endLabel=document.createElement('label');endLabel.append(document.createTextNode('Puissance d’arrivée (W)'),end);endCell.append(endLabel);endCell.className='ramp-end';tr.append(endCell);
+ const syncRamp=()=>{const enabled=check.checked;tr.classList.toggle('is-ramp',enabled);end.disabled=!enabled;end.hidden=!enabled;endCell.hidden=!enabled;tr.querySelector('[data-kind=watts]').closest('label').querySelector('span').textContent=enabled?'Puissance de départ (W)':'Puissance (W)';tr.querySelector('[data-kind=watts]').setAttribute('aria-label',enabled?'Puissance de départ en watts':'Puissance en watts');};syncRamp();check.onchange=()=>{syncRamp();syncProgramUnits();markProgramDirty();};
+ const td=document.createElement('td'),button=document.createElement('button');button.textContent='×';button.type='button';button.setAttribute('aria-label','Supprimer cette étape');button.onclick=()=>{tr.remove();markProgramDirty();};td.append(button);tr.append(td);$('programRows').append(tr);syncProgramUnits();
+}
+function syncProgramUnits(){
+ for(const tr of $('programRows').rows){const relative=tr.querySelector('[data-kind=wkg]').checked,unit=relative?'W/kg':'W',ramp=tr.querySelector('[data-kind=ramp]').checked;for(const kind of ['watts','endWatts']){const input=tr.querySelector('[data-kind='+kind+']'),label=input.closest('label'),title=kind==='endWatts'?'Puissance d’arrivée':ramp?'Puissance de départ':'Puissance';input.min=relative?.01:1;input.max=relative?30:1500;input.step=relative?.01:1;input.setAttribute('aria-label',title+' en '+unit);if(kind==='endWatts')label.firstChild.textContent=title+' ('+unit+')';else label.querySelector('span').textContent=title+' ('+unit+')';}}
+ const relative=[...$('programRows').rows].some(tr=>tr.querySelector('[data-kind=wkg]').checked),mass=subjectMass();$('programUnitHint').textContent=relative?(mass===null?'Création possible sans masse. Renseigner la masse du sujet en haut avant le lancement.':mass+' kg : 1 W/kg = '+mass+' W. Seules les étapes cochées W/kg utilisent cette masse.'):'Chaque étape peut être en W ou en W/kg.';
+}
+function readProgramEditor(){return validateProgram({id:$('programSelect').value,name:$('programName').value,repeats:$('programRepeats').value,steps:[...$('programRows').rows].map(tr=>({unit:tr.querySelector('[data-kind=wkg]').checked?'wkg':'w',seconds:tr.querySelector('[data-kind=seconds]').value,watts:tr.querySelector('[data-kind=watts]').value,ramp:tr.querySelector('[data-kind=ramp]').checked,endWatts:tr.querySelector('[data-kind=endWatts]').value}))});}
+function loadProgramEditor(p){$('programName').value=p?.name||'';$('programRepeats').value=p?.repeats||1;$('programRows').replaceChildren();for(const row of p?.steps||[{seconds:60,watts:50}])addProgramRow(row.seconds,row.watts,row.ramp===true,row.endWatts??row.watts,(row.unit??p?.unit)==='wkg');}
+function showProgramProgress(extra=''){
+ const r=programRun;if(!r)return;
+ if(!extra&&r.state==='running'&&(!telemetry.cadence||Date.now()-telemetry.cadence.at>3000||telemetry.cadence.v<30||!telemetry.power||Date.now()-telemetry.power.at>3000))extra='attente du pédalage';
+ updateWorkoutProgress(r,extra||'En cours');
+ const remaining=Math.max(0,r.steps[r.index].seconds-Math.floor(r.elapsed/1000));
+ $('programState').textContent=r.name+' · '+(r.index+1)+'/'+r.steps.length+' · '+Math.round(stepPower(r.steps[r.index],r.elapsed))+' W · '+fmt(remaining)+(extra?' · '+extra:'');
+}
+async function endProgram(message){
+ if(!programRun)return;
+ finishCapture();nativeTarget=null;pauseClock();sessionState='stopped';$('session').textContent='Chronomètre arrêté';cancelProgram(message);stopErg(message,true);$('programState').textContent=message;
+ await action(async()=>{if(!ready||!bike?.gatt.connected||poisoned)return;await withControl(()=>canRes&&$('powerMode').value==='external'?send(4,resistancePayload(+$('res').min,domyosLevels)):send(8,[1]));});setEnabled();
+}
+function programTarget(step,ms){const min=+$('watts').min,max=+$('watts').max,increment=+$('watts').step;return Math.max(min,Math.min(max,min+Math.round((stepPower(step,ms)-min)/increment)*increment));}
+async function updateRamp(r){
+ const step=r.steps[r.index];if(!step.ramp)return;
+ const target=programTarget(step,r.elapsed),now=performance.now(),current=$('powerMode').value==='native'?nativeTarget:ergTarget;
+ if(target===current||now-(r.rampSentAt??-Infinity)<1000&&r.elapsed<step.seconds*1000)return;
+ r.rampSentAt=now;
+ if($('powerMode').value==='external'){if(ergActive){ergTarget=target;$('watts').value=target;$('ergState').textContent='Active — cible '+target+' W';}return;}
+ const epoch=programEpoch;
+ await action(async()=>{try{await setPowerTarget(target,()=>programRun===r&&programEpoch===epoch);}catch(e){stopErg('rampe interrompue');throw e;}});
+}
+async function programTick(){
+ const r=programRun;if(!r)return;
+ const now=performance.now(),dt=now-r.last;r.last=now;
+ if(r.state==='paused'||busy)return;
+ if(!ready||!bike?.gatt.connected||poisoned||document.hidden){stopErg('programme interrompu');return;}
+ const c=telemetry.cadence,p=telemetry.power;
+ if(!c||Date.now()-c.at>3000||c.v<30||!p||Date.now()-p.at>3000){showProgramProgress('attente du pédalage');return;}
+ if(dt>3000){pauseClock();sessionState='paused';r.state='paused';$('programPause').textContent='Reprendre';stopErg('pause après interruption de la page',true);showProgramProgress('pause');setEnabled();return;}
+ r.elapsed+=Math.max(0,dt);await updateRamp(r);if(programRun!==r)return;recordWorkoutPower(r);
+ if(r.elapsed>=r.steps[r.index].seconds*1000){
+  if(r.index+1===r.steps.length){await endProgram('Programme terminé');return;}
+  const epoch=programEpoch,next=r.index+1;
+  await action(async()=>{try{if(await setPowerTarget(r.steps[next].watts,()=>programRun===r&&programEpoch===epoch)){r.index=next;r.elapsed=0;r.rampSentAt=undefined;r.last=performance.now();captureSample();}}catch(e){stopErg('étape refusée');throw e;}});
+ }
+ if(programRun===r)showProgramProgress();
+}
+$('programSelect').onchange=async()=>{const p=programs.find(p=>p.id===$('programSelect').value);if(!p&&programRun)await endProgram('Entraînement arrêté');if(!p)$('programState').textContent='';loadProgramEditor(p);programDirty=false;$('programEditor').open=false;previewSelectedWorkout();programNotice(p?'Programme sélectionné : « '+p.name+' » — '+p.steps.length+' étape(s), '+p.repeats+' répétition(s).':'Aucun entraînement sélectionné.');setEnabled();};
+$('programNew').onclick=()=>{$('programSelect').value='';loadProgramEditor(null);programDirty=true;$('programEditor').open=true;previewSelectedWorkout();programNotice('Nouveau programme : donner un nom, régler les étapes, puis Enregistrer.');$('programName').focus();setEnabled();};
+$('programEdit').onclick=()=>{$('programEditor').open=true;$('programName').focus();};
+$('programEditor').addEventListener('input',markProgramDirty);
+$('programAdd').onclick=()=>{if($('programRows').rows.length>=100){error(Error('Maximum 100 étapes.'));return;}addProgramRow();markProgramDirty();};
+$('programSave').onclick=()=>{try{const p=readProgramEditor();p.id=p.id||crypto.randomUUID();const next=programs.filter(old=>old.id!==p.id);if(next.length>=200)throw Error('Maximum 200 programmes.');storePrograms([...next,p]);$('programSelect').value=p.id;programDirty=false;$('programEditor').open=false;previewSelectedWorkout();programNotice('✓ Programme « '+p.name+' » enregistré. Il est sélectionné dans la liste ci-dessus.');setEnabled();}catch(e){programNotice('Enregistrement impossible : '+e.message,'error');$('programEditor').open=true;if(!$('programName').value.trim())$('programName').focus();error(e)}};
+$('programDelete').onclick=()=>{const id=$('programSelect').value;if(!id)return;if(!confirm('Supprimer ce programme enregistré ?'))return;try{storePrograms(programs.filter(p=>p.id!==id));loadProgramEditor(null);programDirty=false;$('programEditor').open=false;previewSelectedWorkout();programNotice('Programme supprimé.');setEnabled();}catch(e){programNotice(e.message,'error');error(e)}};
+$('programExport').onclick=()=>downloadJSON({format:'tr-bike-programs',version:programs.some(hasRelativeSteps)?3:1,programs},'TR_Bike_programmes.json');
+$('programImport').onclick=()=>$('programFile').click();
+$('programFile').onchange=async()=>{try{const file=$('programFile').files[0];if(!file)return;if(file.size>1000000)throw Error('Fichier trop volumineux (maximum 1 Mo).');const data=JSON.parse(await file.text());if(data.format!=='tr-bike-programs'||![1,2,3].includes(data.version)||!Array.isArray(data.programs)||data.programs.length>200)throw Error('Fichier de programmes TR Bike invalide.');const imported=data.programs.map(p=>({...validateProgram(p),id:crypto.randomUUID()}));if(programs.length+imported.length>200)throw Error('Maximum 200 programmes enregistrés.');storePrograms([...programs,...imported]);if(imported.length){$('programSelect').value=imported[0].id;loadProgramEditor(imported[0]);programDirty=false;$('programEditor').open=false;}previewSelectedWorkout();programNotice(imported.length+' programme(s) importé(s), disponibles dans la liste ci-dessus.');setEnabled();}catch(e){programNotice(e.message,'error');error(e)}finally{$('programFile').value='';}};
+$('programStart').onclick=()=>action(async()=>{
+ const saved=programs.find(p=>p.id===$('programSelect').value);if(!saved||programDirty)throw Error('Enregistrer puis sélectionner le programme avant de le lancer.');const validated=validateProgram(saved),p=resolveProgram(validated,hasRelativeSteps(validated)?requireMass():subjectMass(),true),min=+$('watts').min,max=+$('watts').max,step=+$('watts').step;
+ for(const row of p.steps)for(const watts of row.ramp?[row.watts,row.endWatts]:[row.watts])if(watts<min||watts>max||Math.abs((watts-min)/step-Math.round((watts-min)/step))>1e-5)throw Error('Puissance incompatible avec ce vélo : '+watts+' W. Plage '+min+' à '+max+' W, pas '+step+' W.');
+ stopErg('lancement du programme');
+ const r={name:p.name,steps:Array.from({length:p.repeats},()=>p.steps).flat().map(s=>({...s})),index:0,elapsed:0,last:performance.now(),state:'running'},epoch=programEpoch;
+ programRun=r;renderWorkout(p);updateWorkoutProgress(r,'En cours');
+ try{if(await setPowerTarget(r.steps[0].watts,()=>programRun===r&&programEpoch===epoch)){if($('powerMode').value==='native')await withControl(()=>programRun===r&&programEpoch===epoch?send(7):Promise.resolve());if(programRun===r&&programEpoch===epoch){r.last=performance.now();recordWorkoutPower(r);showProgramProgress();}}}catch(e){stopErg('échec du programme');throw e;}
+});
+$('programPause').onclick=()=>{
+ const r=programRun;if(!r||busy)return;
+ if(r.state==='running'){pauseClock();sessionState='paused';r.state='paused';programEpoch++;stopErg('pause programme',true);$('programPause').textContent='Reprendre';showProgramProgress('pause');setEnabled();if($('powerMode').value==='native')return action(()=>withControl(()=>send(8,[2])));return;}
+ return action(async()=>{const epoch=++programEpoch;try{if(await setPowerTarget(programTarget(r.steps[r.index],r.elapsed),()=>programRun===r&&programEpoch===epoch)){if($('powerMode').value==='native')await withControl(()=>programRun===r&&programEpoch===epoch?send(7):Promise.resolve());if(programRun===r&&programEpoch===epoch){r.state='running';r.last=performance.now();$('programPause').textContent='Pause';showProgramProgress();}}}catch(e){stopErg('reprise impossible');throw e;}});
+};
+function updateProgramNavigation(){
+ const r=programRun,available=!!r&&ready&&bike?.gatt.connected&&!busy&&!poisoned;
+ $('programPrevious').disabled=!available||r.index===0;
+ $('programNext').disabled=!available||r.index===r.steps.length-1;
+}
+function skipProgramInterval(direction){
+ const r=programRun;if(!r||busy||!ready||!bike?.gatt.connected||poisoned)return;
+ const next=r.index+direction;if(next<0||next>=r.steps.length)return;
+ return action(async()=>{
+  const epoch=++programEpoch,guard=()=>programRun===r&&programEpoch===epoch;
+  try{
+   if(r.state!=='paused'&&!await setPowerTarget(r.steps[next].watts,guard))return;
+   if(!guard())return;
+   r.index=next;r.elapsed=0;r.rampSentAt=undefined;r.last=performance.now();captureSample();$('watts').value=r.steps[next].watts;
+   if(workoutView){workoutView.breakNext=true;workoutView.lastMeasurementAt=telemetry.power?.at??null;$('workoutChart').querySelector('[data-workout-measured-point]')?.setAttribute('visibility','hidden');$('workoutMeasured').textContent='Puissance mesurée : —';}
+   showProgramProgress(r.state==='paused'?'pause':'En cours');
+  }catch(e){stopErg('changement d’intervalle refusé');throw e;}
+ });
+}
+$('programPrevious').onclick=()=>skipProgramInterval(-1);
+$('programNext').onclick=()=>skipProgramInterval(1);
+$('programStop').onclick=()=>{if(!busy)return endProgram('Programme arrêté');};
+const sessionPlay=$('play').onclick,sessionPause=$('pause').onclick,sessionStop=$('stop').onclick;
+$('play').onclick=()=>programRun?(programRun.state==='paused'?$('programPause').onclick():undefined):sessionPlay();
+$('pause').onclick=()=>programRun?(programRun.state==='running'?$('programPause').onclick():undefined):sessionPause();
+$('stop').onclick=()=>programRun?$('programStop').onclick():sessionStop();
+refreshProgramChoices();programViews.add(refreshProgramChoices);loadProgramEditor(null);programNotice(programs.length?'Retrouver vos programmes dans la liste « Programmes enregistrés ».':'Aucun programme enregistré. Cliquer sur « Créer un programme » pour commencer.');
+
+$('compat').textContent=navigator.bluetooth?'Bluetooth disponible dans ce navigateur. Essai hors patient ; garder la page au premier plan.':'Web Bluetooth indisponible ici. Ouvrir la page dans un navigateur compatible, sur HTTPS ou localhost.';setEnabled();
+
+}
+const template=document.getElementById('bike-template');
+function updateLayout(){document.getElementById('grid').classList.toggle('single',document.querySelectorAll('[data-bike-card]').length<=1);updateConnectedCount();}
+let nextSlot=0;
+function addBike(){const slot=++nextSlot,fragment=template.content.cloneNode(true),root=fragment.querySelector('[data-bike-card]');for(const el of root.querySelectorAll('[data-id]'))el.id='bike-'+slot+'-'+el.dataset.id;for(const label of root.querySelectorAll('[data-for]'))label.htmlFor='bike-'+slot+'-'+label.dataset.for;root.querySelector('[data-id="heading"]').textContent='Vélo '+slot;for(const menu of root.querySelectorAll('details'))menu.open=false;document.getElementById('grid').append(fragment);mountBike(root,slot);updateLayout();return root;}
+document.getElementById('addBike').onclick=()=>{const root=addBike();const heading=root.querySelector('[data-id="heading"]');heading.tabIndex=-1;heading.focus({preventScroll:true});root.scrollIntoView?.({behavior:'smooth',block:'nearest'});};
+addBike();
+if(!navigator.bluetooth)document.getElementById('environment').textContent='Bluetooth indisponible dans ce navigateur. Utiliser Chrome ou Edge compatibles sur HTTPS.';
+
+</script></body></html>
